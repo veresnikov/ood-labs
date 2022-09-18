@@ -13,8 +13,8 @@ func main() {
 	display := weatherstation.NewDisplay()
 	statDisplay := weatherstation.NewStatisticsDisplay()
 
-	station.RegisterObserver(&display)
-	station.RegisterObserver(&statDisplay)
+	station.RegisterObserver(display)
+	station.RegisterObserver(statDisplay)
 	station.SetMeasurements(2, 3, 3)
 	station.SetMeasurements(4, 3, 3)
 	station.SetMeasurements(-1, 3, 3)
