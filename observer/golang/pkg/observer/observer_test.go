@@ -63,32 +63,40 @@ func initialize() (*bytes.Buffer, *baseObservable[TestData], *TestObservable) {
 	logger := log.Default()
 	buffer := bytes.NewBufferString("")
 	logger.SetOutput(buffer)
-	baseObservable := &baseObservable[TestData]{logger: log.Default()}
+	baseObservable := &baseObservable[TestData]{logger: log.Default(), observers: make(map[int][]Observer[TestData])}
 	observable := NewTestObservable(baseObservable)
 	return buffer, baseObservable, observable
+}
+
+func totalObservers(observers map[int][]Observer[TestData]) int {
+	total := 0
+	for _, o := range observers {
+		total += len(o)
+	}
+	return total
 }
 
 func TestBaseObservable_RegisterObserver(t *testing.T) {
 	_, baseObservable, observable := initialize()
 	callback := func(data TestData) {}
 	observer := NewTestObserver(callback)
-	if len(baseObservable.observers) != 0 {
+	if totalObservers(baseObservable.observers) != 0 {
 		t.Error("unexpected observers in base observable")
 	}
 
-	observable.RegisterObserver(observer)
-	if len(baseObservable.observers) != 1 {
+	observable.RegisterObserver(observer, 1)
+	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not registered")
 	}
 
-	observable.RegisterObserver(observer)
-	if len(baseObservable.observers) != 1 {
+	observable.RegisterObserver(observer, 2)
+	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("duplicated observer in base observable")
 	}
 
 	observer2 := NewTestObserver(callback)
-	observable.RegisterObserver(observer2)
-	if len(baseObservable.observers) != 2 {
+	observable.RegisterObserver(observer2, 3)
+	if totalObservers(baseObservable.observers) != 2 {
 		t.Error("observer is not registered")
 	}
 }
@@ -102,19 +110,19 @@ func TestBaseObservable_RemoveObserver(t *testing.T) {
 	if !strings.Contains(loggerBuffer.String(), "observer not registered") {
 		t.Error("removing non-existent observer")
 	}
-	observable.RegisterObserver(observer)
-	if len(baseObservable.observers) != 1 {
+	observable.RegisterObserver(observer, 1)
+	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not registered")
 	}
 
 	observer2 := NewTestObserver(callback)
-	observable.RegisterObserver(observer2)
-	if len(baseObservable.observers) != 2 {
+	observable.RegisterObserver(observer2, 3)
+	if totalObservers(baseObservable.observers) != 2 {
 		t.Error("observer is not registered")
 	}
 
 	observable.RemoveObserver(observer)
-	if len(baseObservable.observers) != 1 {
+	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not deleted")
 	}
 }
@@ -124,13 +132,13 @@ func TestBaseObservable_NotifyObservers(t *testing.T) {
 	var returnedValue TestData
 	callback := func(data TestData) { returnedValue = data }
 	observer := NewTestObserver(callback)
-	if len(baseObservable.observers) != 0 {
+	if totalObservers(baseObservable.observers) != 0 {
 		t.Error("unexpected observers in base observable")
 	}
 
 	castedObserver := observer
-	observable.RegisterObserver(castedObserver)
-	if len(baseObservable.observers) != 1 {
+	observable.RegisterObserver(castedObserver, 1)
+	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not registered")
 	}
 	testData := TestData{data: "some data"}
@@ -140,29 +148,63 @@ func TestBaseObservable_NotifyObservers(t *testing.T) {
 	}
 }
 
+func TestBaseObservable_NotifyObserversWithPriority(t *testing.T) {
+	_, baseObservable, observable := initialize()
+	if totalObservers(baseObservable.observers) != 0 {
+		t.Error("unexpected observers in base observable")
+	}
+
+	priorityResult := make([]string, 0)
+	observer1 := NewTestObserver(func(data TestData) {
+		priorityResult = append(priorityResult, "observer1")
+	})
+	observable.RegisterObserver(observer1, 1)
+	if totalObservers(baseObservable.observers) != 1 {
+		t.Error("observer is not registered")
+	}
+	observer2 := NewTestObserver(func(data TestData) {
+		priorityResult = append(priorityResult, "observer2")
+	})
+	observable.RegisterObserver(observer2, 2)
+	if totalObservers(baseObservable.observers) != 2 {
+		t.Error("observer is not registered")
+	}
+	observer3 := NewTestObserver(func(data TestData) {
+		priorityResult = append(priorityResult, "observer3")
+	})
+	observable.RegisterObserver(observer3, 3)
+	if totalObservers(baseObservable.observers) != 3 {
+		t.Error("observer is not registered")
+	}
+	testData := TestData{data: "some data"}
+	observable.SendData(testData)
+	if !(priorityResult[0] == "observer1" && priorityResult[1] == "observer2" && priorityResult[2] == "observer3") {
+		t.Error("messages arrived in the wrong order")
+	}
+}
+
 func TestBaseObservable_NotifyObserversWithRemovableObserver(t *testing.T) {
 	_, baseObservable, observable := initialize()
 	callback := func(data TestData) {}
 	observer := NewTestRemovableObserver(observable, callback)
-	if len(baseObservable.observers) != 0 {
+	if totalObservers(baseObservable.observers) != 0 {
 		t.Error("unexpected observers in base observable")
 	}
 
-	observable.RegisterObserver(observer)
-	if len(baseObservable.observers) != 1 {
+	observable.RegisterObserver(observer, 1)
+	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not registered")
 	}
 
 	observer2 := NewTestObserver(callback)
-	observable.RegisterObserver(observer2)
-	if len(baseObservable.observers) != 2 {
+	observable.RegisterObserver(observer2, 2)
+	if totalObservers(baseObservable.observers) != 2 {
 		t.Error("observer is not registered")
 	}
 
 	testData := TestData{data: "some data"}
 	observable.SendData(testData)
-	observable.RegisterObserver(observer2)
-	if len(baseObservable.observers) != 1 {
+	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not deleted")
 	}
 }
