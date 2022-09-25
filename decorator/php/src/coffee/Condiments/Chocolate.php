@@ -13,11 +13,7 @@ class Chocolate extends CondimentDecorator
     {
         parent::__construct(self::CondimentDescription, self::CondimentCost);
         $this->beverage = $beverage;
-        if ($chips > self::MaxWedge)
-        {
-            throw new LogicException("too many chocolate chips");
-        }
-        $this->chips = $chips;
+        $this->chips = min($chips, self::MaxWedge);
     }
 
     protected function GetCondimentDescription(): string
