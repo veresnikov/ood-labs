@@ -1,18 +1,33 @@
 <?php
 declare(strict_types=1);
 
-class Milkshake extends BaseBeverage
+class Milkshake extends BeverageVariable
 {
-    private const description = "Milkshake";
-    private const cost = 80;
+    private const Large = "Large";
+    private const Medium = "Medium";
+    private const Small = "Small";
 
-    public function __construct()
+    private const Portion = [
+        self::Large => [
+            BeverageVariable::DescriptionField => self::Large,
+            BeverageVariable::CostField => 80,
+        ],
+        self::Medium => [
+            BeverageVariable::DescriptionField => self::Medium,
+            BeverageVariable::CostField => 60,
+        ],
+        self::Small => [
+            BeverageVariable::DescriptionField => self::Small,
+            BeverageVariable::CostField => 50,
+        ],
+    ];
+
+    private const description = "Milkshake";
+
+    public function __construct(MilkshakeVariant $variant)
     {
         parent::__construct(self::description);
-    }
-
-    public function GetCost(): float
-    {
-        return self::cost;
+        $this->rules = self::Portion;
+        $this->type = $variant->name;
     }
 }
