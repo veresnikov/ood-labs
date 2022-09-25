@@ -28,7 +28,7 @@ class Syrup extends CondimentDecorator
         $this->beverage = $beverage;
     }
 
-    public function GetCondimentDescription(): string
+    protected function GetCondimentDescription(): string
     {
         return parent::GetCondimentDescription() . " syrup";
     }

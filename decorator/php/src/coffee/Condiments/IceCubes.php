@@ -30,12 +30,12 @@ class IceCubes extends CondimentDecorator
         $this->quantity = $quantity;
     }
 
-    public function GetCondimentDescription(): string
+    protected function GetCondimentDescription(): string
     {
         return parent::GetCondimentDescription() . " ice cubes x " . $this->quantity;
     }
 
-    public function GetCondimentCost(): float
+    protected function GetCondimentCost(): float
     {
         return parent::GetCondimentCost() * $this->quantity;
     }

@@ -22,12 +22,12 @@ class CondimentDecorator implements BeverageInterface
         return $this->beverage->GetCost() + $this->GetCondimentCost();
     }
 
-    public function GetCondimentDescription(): string
+    protected function GetCondimentDescription(): string
     {
         return $this->condimentDescription;
     }
 
-    public function GetCondimentCost(): float
+    protected function GetCondimentCost(): float
     {
         return $this->condimentCost;
     }

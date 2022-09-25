@@ -16,12 +16,12 @@ class ChocolateCrumbs extends CondimentDecorator
         $this->mass = $mass;
     }
 
-    public function GetCondimentDescription(): string
+    protected function GetCondimentDescription(): string
     {
         return parent::GetCondimentDescription() . " " . $this->mass . "g";
     }
 
-    public function GetCondimentCost(): float
+    protected function GetCondimentCost(): float
     {
         return parent::GetCondimentCost() * $this->mass;
     }
