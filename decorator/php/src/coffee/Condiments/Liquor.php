@@ -1,23 +1,23 @@
 <?php
 declare(strict_types=1);
 
-class Syrup extends CondimentDecorator
+class Liquor extends CondimentDecorator
 {
+    public const Walnut = "Walnut";
     public const Chocolate = "Chocolate";
-    public const Maple = "Maple";
     private const DescriptionField = "Description";
-    private const Cost = 15;
+    private const Cost = 50;
 
     private const SyrupParams = [
+        self::Walnut => [
+            self::DescriptionField => self::Walnut,
+        ],
         self::Chocolate => [
             self::DescriptionField => self::Chocolate,
-        ],
-        self::Maple => [
-            self::DescriptionField => self::Maple,
         ]
     ];
 
-    public function __construct(BeverageInterface $beverage, SyrupType $type)
+    public function __construct(BeverageInterface $beverage, LiquorType $type)
     {
         $description = self::SyrupParams[$type->name][self::DescriptionField];
         parent::__construct($description, self::Cost);
@@ -26,6 +26,6 @@ class Syrup extends CondimentDecorator
 
     protected function GetCondimentDescription(): string
     {
-        return parent::GetCondimentDescription() . " syrup";
+        return parent::GetCondimentDescription() . " liquor";
     }
 }
