@@ -73,7 +73,7 @@ type statisticsDisplay struct {
 }
 
 func (d *statisticsDisplay) Update(data WeatherData) {
-	switch data.sender {
+	switch data.location {
 	case WeatherStationIn:
 		d.temperatureStatisticIn.Update(data.temperature)
 		d.printInfo(d.temperatureStatisticIn)

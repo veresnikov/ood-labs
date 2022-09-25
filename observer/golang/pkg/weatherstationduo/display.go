@@ -16,7 +16,7 @@ type display struct {
 }
 
 func (d *display) Update(data WeatherData) {
-	switch data.sender {
+	switch data.location {
 	case WeatherStationIn:
 		d.inStation = data
 		d.printInfo(d.inStation)
@@ -30,7 +30,7 @@ func (d *display) Update(data WeatherData) {
 
 func (d *display) printInfo(data WeatherData) {
 	fmt.Printf("Station location %v\nTemperature: %v\nHumidity: %v\nPressure: %v\n",
-		data.sender,
+		data.location,
 		data.temperature,
 		data.humidity,
 		data.pressure,

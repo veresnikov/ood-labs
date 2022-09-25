@@ -18,7 +18,7 @@ func NewWeatherStation(logger *log.Logger, location string) *Station {
 }
 
 type WeatherData struct {
-	sender      string
+	location    string
 	temperature float32
 	humidity    float32
 	pressure    float32
@@ -34,7 +34,7 @@ type Station struct {
 
 func (s *Station) SetMeasurements(temperature float32, humidity float32, pressure float32) {
 	s.data = WeatherData{
-		sender:      s.location,
+		location:    s.location,
 		temperature: temperature,
 		humidity:    humidity,
 		pressure:    pressure,
