@@ -1,14 +1,12 @@
 package weatherstation
 
 import (
-	"log"
-
 	"github.com/veresnikov/ood-labs/observer/golang/pkg/observer"
 )
 
-func NewWeatherStation(logger *log.Logger) *Station {
-	s := Station{logger: logger}
-	s.Observable = observer.NewBaseObservable[WeatherData](s.logger, s.getChangedData)
+func NewWeatherStation() *Station {
+	s := Station{}
+	s.Observable = observer.NewBaseObservable[WeatherData](s.getChangedData)
 	return &s
 }
 
@@ -21,8 +19,7 @@ type WeatherData struct {
 type Station struct {
 	observer.Observable[WeatherData]
 
-	data   WeatherData
-	logger *log.Logger
+	data WeatherData
 }
 
 func (s *Station) SetMeasurements(temperature float32, humidity float32, pressure float32) {

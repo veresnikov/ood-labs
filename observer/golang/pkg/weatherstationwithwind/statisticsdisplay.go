@@ -1,8 +1,10 @@
-package weatherstationduo
+package weatherstationwithwind
 
 import (
 	"fmt"
 	"strings"
+
+	"github.com/veresnikov/ood-labs/observer/golang/pkg/observer"
 )
 
 func newBaseStatistic(typeStatistic string) statisticInfo {
@@ -58,33 +60,27 @@ func (s *baseStatistic) Update(data float32) {
 	s.countAcc++
 }
 
-func NewStatisticsDisplay() Observer {
+func NewStatisticsDisplay() observer.Observer[WeatherData] {
 	return &statisticsDisplay{
-		data: make(map[*Station]statisticInfo),
+		temperatureStatistic: newBaseStatistic("temperature"),
+		humidityStatistic:    newBaseStatistic("humidity"),
+		pressureStatistic:    newBaseStatistic("pressure"),
 	}
 }
 
 type statisticsDisplay struct {
-	data map[*Station]statisticInfo
+	temperatureStatistic statisticInfo
+	humidityStatistic    statisticInfo
+	pressureStatistic    statisticInfo
 }
 
-func (d *statisticsDisplay) addStation(station *Station) {
-	d.data[station] = newBaseStatistic("temperature")
+func (d *statisticsDisplay) Update(data WeatherData) {
+	d.temperatureStatistic.Update(data.data[temperatureField].GetValue().(float32))
+	d.humidityStatistic.Update(data.data[humidityField].GetValue().(float32))
+	d.pressureStatistic.Update(data.data[pressureField].GetValue().(float32))
+	d.printInfo()
 }
 
-func (d *statisticsDisplay) removeStation(station *Station) {
-	delete(d.data, station)
-}
-
-func (d *statisticsDisplay) Update(payload WeatherData) {
-	statistic, ok := d.data[payload.sender]
-	if ok {
-		statistic.Update(payload.temperature)
-		d.data[payload.sender] = statistic
-		d.printInfo(statistic)
-	}
-}
-
-func (d *statisticsDisplay) printInfo(info statisticInfo) {
-	fmt.Print("Statistics display\n", info)
+func (d *statisticsDisplay) printInfo() {
+	fmt.Print("Statistics display\n", d.temperatureStatistic, d.humidityStatistic, d.pressureStatistic)
 }

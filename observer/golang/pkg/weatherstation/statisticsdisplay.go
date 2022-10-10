@@ -12,7 +12,6 @@ func newBaseStatistic(typeStatistic string) statisticInfo {
 }
 
 type statisticInfo interface {
-	String() string
 	Update(data float32)
 }
 

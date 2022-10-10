@@ -1,8 +1,6 @@
 package weatherstationduo
 
 import (
-	"log"
-
 	"github.com/veresnikov/ood-labs/observer/golang/pkg/observer"
 )
 
@@ -11,14 +9,20 @@ const (
 	WeatherStationOut = "out"
 )
 
-func NewWeatherStation(logger *log.Logger, location string) *Station {
-	s := Station{logger: logger, location: location}
-	s.Observable = observer.NewBaseObservable[WeatherData](s.logger, s.getChangedData)
+type Observer interface {
+	observer.Observer[WeatherData]
+	addStation(station *Station)
+	removeStation(station *Station)
+}
+
+func NewWeatherStation(location string) *Station {
+	s := Station{location: location}
+	s.Observable = observer.NewBaseObservable[WeatherData](s.getChangedData)
 	return &s
 }
 
 type WeatherData struct {
-	location    string
+	sender      *Station
 	temperature float32
 	humidity    float32
 	pressure    float32
@@ -29,17 +33,38 @@ type Station struct {
 
 	location string
 	data     WeatherData
-	logger   *log.Logger
+}
+
+func (s *Station) RegisterObserver(observer Observer, priority int) error {
+	err := s.Observable.RegisterObserver(observer, priority)
+	if err != nil {
+		return err
+	}
+	observer.addStation(s)
+	return nil
+}
+
+func (s *Station) RemoveObserver(observer Observer) error {
+	err := s.Observable.RemoveObserver(observer)
+	if err != nil {
+		return err
+	}
+	observer.removeStation(s)
+	return nil
 }
 
 func (s *Station) SetMeasurements(temperature float32, humidity float32, pressure float32) {
 	s.data = WeatherData{
-		location:    s.location,
+		sender:      s,
 		temperature: temperature,
 		humidity:    humidity,
 		pressure:    pressure,
 	}
 	s.NotifyObservers()
+}
+
+func (s *Station) getLocation() string {
+	return s.location
 }
 
 func (s *Station) getChangedData() WeatherData {
