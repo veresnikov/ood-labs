@@ -1,9 +1,7 @@
 package observer
 
 import (
-	"bytes"
-	"log"
-	"strings"
+	stderr "errors"
 	"testing"
 )
 
@@ -59,13 +57,10 @@ func (o *TestRemovableObserver) Update(data TestData) {
 	o.callback(data)
 }
 
-func initialize() (*bytes.Buffer, *baseObservable[TestData], *TestObservable) {
-	logger := log.Default()
-	buffer := bytes.NewBufferString("")
-	logger.SetOutput(buffer)
-	baseObservable := &baseObservable[TestData]{logger: log.Default(), observers: make(map[int][]Observer[TestData])}
+func initialize() (*baseObservable[TestData], *TestObservable) {
+	baseObservable := &baseObservable[TestData]{observers: make(map[int][]Observer[TestData])}
 	observable := NewTestObservable(baseObservable)
-	return buffer, baseObservable, observable
+	return baseObservable, observable
 }
 
 func totalObservers(observers map[int][]Observer[TestData]) int {
@@ -77,58 +72,67 @@ func totalObservers(observers map[int][]Observer[TestData]) int {
 }
 
 func TestBaseObservable_RegisterObserver(t *testing.T) {
-	_, baseObservable, observable := initialize()
+	baseObservable, observable := initialize()
 	callback := func(data TestData) {}
 	observer := NewTestObserver(callback)
 	if totalObservers(baseObservable.observers) != 0 {
 		t.Error("unexpected observers in base observable")
 	}
 
-	observable.RegisterObserver(observer, 1)
+	err := observable.RegisterObserver(observer, 1)
+	assertErr(err)
 	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not registered")
 	}
 
-	observable.RegisterObserver(observer, 2)
+	err = observable.RegisterObserver(observer, 2)
+	if err == nil {
+		assertErr(stderr.New("no error about observer duplication"))
+	}
 	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("duplicated observer in base observable")
 	}
 
 	observer2 := NewTestObserver(callback)
-	observable.RegisterObserver(observer2, 3)
+	err = observable.RegisterObserver(observer2, 3)
+	assertErr(err)
 	if totalObservers(baseObservable.observers) != 2 {
 		t.Error("observer is not registered")
 	}
 }
 
 func TestBaseObservable_RemoveObserver(t *testing.T) {
-	loggerBuffer, baseObservable, observable := initialize()
+	baseObservable, observable := initialize()
 	callback := func(data TestData) {}
 	observer := NewTestObserver(callback)
 
-	observable.RemoveObserver(observer)
-	if !strings.Contains(loggerBuffer.String(), "observer not registered") {
+	err := observable.RemoveObserver(observer)
+	if err == nil {
 		t.Error("removing non-existent observer")
 	}
-	observable.RegisterObserver(observer, 1)
+
+	err = observable.RegisterObserver(observer, 1)
+	assertErr(err)
 	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not registered")
 	}
 
 	observer2 := NewTestObserver(callback)
-	observable.RegisterObserver(observer2, 3)
+	err = observable.RegisterObserver(observer2, 3)
+	assertErr(err)
 	if totalObservers(baseObservable.observers) != 2 {
 		t.Error("observer is not registered")
 	}
 
-	observable.RemoveObserver(observer)
+	err = observable.RemoveObserver(observer)
+	assertErr(err)
 	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not deleted")
 	}
 }
 
 func TestBaseObservable_NotifyObservers(t *testing.T) {
-	_, baseObservable, observable := initialize()
+	baseObservable, observable := initialize()
 	var returnedValue TestData
 	callback := func(data TestData) { returnedValue = data }
 	observer := NewTestObserver(callback)
@@ -137,7 +141,8 @@ func TestBaseObservable_NotifyObservers(t *testing.T) {
 	}
 
 	castedObserver := observer
-	observable.RegisterObserver(castedObserver, 1)
+	err := observable.RegisterObserver(castedObserver, 1)
+	assertErr(err)
 	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not registered")
 	}
@@ -149,7 +154,7 @@ func TestBaseObservable_NotifyObservers(t *testing.T) {
 }
 
 func TestBaseObservable_NotifyObserversWithPriority(t *testing.T) {
-	_, baseObservable, observable := initialize()
+	baseObservable, observable := initialize()
 	if totalObservers(baseObservable.observers) != 0 {
 		t.Error("unexpected observers in base observable")
 	}
@@ -158,21 +163,24 @@ func TestBaseObservable_NotifyObserversWithPriority(t *testing.T) {
 	observer1 := NewTestObserver(func(data TestData) {
 		priorityResult = append(priorityResult, "observer1")
 	})
-	observable.RegisterObserver(observer1, 1)
+	err := observable.RegisterObserver(observer1, 1)
+	assertErr(err)
 	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not registered")
 	}
 	observer2 := NewTestObserver(func(data TestData) {
 		priorityResult = append(priorityResult, "observer2")
 	})
-	observable.RegisterObserver(observer2, 2)
+	err = observable.RegisterObserver(observer2, 2)
+	assertErr(err)
 	if totalObservers(baseObservable.observers) != 2 {
 		t.Error("observer is not registered")
 	}
 	observer3 := NewTestObserver(func(data TestData) {
 		priorityResult = append(priorityResult, "observer3")
 	})
-	observable.RegisterObserver(observer3, 3)
+	err = observable.RegisterObserver(observer3, 3)
+	assertErr(err)
 	if totalObservers(baseObservable.observers) != 3 {
 		t.Error("observer is not registered")
 	}
@@ -184,20 +192,22 @@ func TestBaseObservable_NotifyObserversWithPriority(t *testing.T) {
 }
 
 func TestBaseObservable_NotifyObserversWithRemovableObserver(t *testing.T) {
-	_, baseObservable, observable := initialize()
+	baseObservable, observable := initialize()
 	callback := func(data TestData) {}
 	observer := NewTestRemovableObserver(observable, callback)
 	if totalObservers(baseObservable.observers) != 0 {
 		t.Error("unexpected observers in base observable")
 	}
 
-	observable.RegisterObserver(observer, 1)
+	err := observable.RegisterObserver(observer, 1)
+	assertErr(err)
 	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not registered")
 	}
 
 	observer2 := NewTestObserver(callback)
-	observable.RegisterObserver(observer2, 2)
+	err = observable.RegisterObserver(observer2, 2)
+	assertErr(err)
 	if totalObservers(baseObservable.observers) != 2 {
 		t.Error("observer is not registered")
 	}
@@ -206,5 +216,11 @@ func TestBaseObservable_NotifyObserversWithRemovableObserver(t *testing.T) {
 	observable.SendData(testData)
 	if totalObservers(baseObservable.observers) != 1 {
 		t.Error("observer is not deleted")
+	}
+}
+
+func assertErr(err error) {
+	if err != nil {
+		panic(err)
 	}
 }
