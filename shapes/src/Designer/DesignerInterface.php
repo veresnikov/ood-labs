@@ -7,5 +7,10 @@ use App\PictureDraft\PictureDraft;
 
 interface DesignerInterface
 {
-    public function CreateDraft(array $input): PictureDraft;
+
+    /**
+     * @param resource $input
+     * @return PictureDraft
+     */
+    public function CreateDraft($input): PictureDraft;
 }
