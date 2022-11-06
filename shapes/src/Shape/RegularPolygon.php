@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Shape;
 
 use App\Canvas\CanvasInterface;
 use App\Color\Color;
 use App\Point\Point;
+use App\Shape\Exception\InvalidVertexCount;
 
 class RegularPolygon extends Shape
 {
@@ -12,8 +14,14 @@ class RegularPolygon extends Shape
     private int $pointsCount;
     private int $radius;
 
+    /**
+     * @throws InvalidVertexCount
+     */
     public function __construct(Color $color, Point $center, int $pointsCount, int $radius)
     {
+        if ($pointsCount < 3) {
+            throw new InvalidVertexCount();
+        }
         parent::__construct($color);
         $this->center = $center;
         $this->pointsCount = $pointsCount;

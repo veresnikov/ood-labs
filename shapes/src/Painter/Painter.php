@@ -10,7 +10,7 @@ class Painter
 {
     public static function DrawPicture(PictureDraft $draft, CanvasInterface $canvas):void
     {
-        for ($index = 0; $index <= $draft->GetShapesCount(); $index++) {
+        for ($index = 0; $index < $draft->GetShapesCount(); $index++) {
             $shape = $draft->GetShape($index);
             $shape->Draw($canvas);
         }
