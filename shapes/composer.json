@@ -8,6 +8,7 @@
     },
     "scripts": {
         "server-start": [
+            "Composer\\Config::disableProcessTimeout",
             "php -S 0.0.0.0:8000"
         ],
         "test": "phpunit src/Tests"
