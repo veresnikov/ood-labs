@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+require_once "vendor/autoload.php";
+
+try {
+    if ($argc < 2) {
+        throw new RuntimeException("Task name not passed. Use: ./console task_name args");
+    }
+    array_shift($argv);
+
+    $taskPath = "src/Task/" . $argv[0] . ".php";
+    $taskName = "App\\Task\\" . $argv[0];
+
+    if (!file_exists($taskPath)) {
+        throw new RuntimeException("Task {$argv[0]} not exist");
+    }
+    array_shift($argv);
+    $task = new $taskName();
+    $task->Execute(count($argv), $argv);
+} catch (Exception $exception) {
+    echo $exception->getMessage() . PHP_EOL;
+    exit(1);
+}
