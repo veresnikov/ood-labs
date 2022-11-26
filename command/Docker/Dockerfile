@@ -3,7 +3,8 @@ FROM php:8.1-cli
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y git
+    apt-get install -y git && \
+    apt-get install -y zlib1g-dev libzip-dev unzip
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
