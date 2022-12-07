@@ -27,6 +27,7 @@ class Image implements ImageInterface
         }
         self::AssertExtension($path);
 
+        // Todo: вынести копирование в команду
         if (!file_exists(self::DIRECTORY)) {
             if (!mkdir(self::DIRECTORY)) {
                 throw new \RuntimeException("Failed create images directory");

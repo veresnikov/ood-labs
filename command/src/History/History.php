@@ -42,7 +42,7 @@ class History implements HistoryInterface
     public function Execute(CommandInterface $command): void
     {
         $command->Execute();
-        $this->commands = array_slice($this->commands, $this->currentCommandIndex);
+        $this->commands = array_slice($this->commands, 0, $this->currentCommandIndex);
         $this->commands[] = $command;
         ++$this->currentCommandIndex;
     }

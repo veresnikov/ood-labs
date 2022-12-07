@@ -19,7 +19,7 @@ class InsertItemCommand extends AbstractCommand
 
     protected function DoExecute(): void
     {
-        if ($this->index) {
+        if ($this->index !== null) {
             Utils::ArrayEmplace($this->items, $this->index, $this->newItem);
             return;
         }
@@ -28,8 +28,9 @@ class InsertItemCommand extends AbstractCommand
 
     protected function DoRollback(): void
     {
-        if ($this->index) {
+        if ($this->index !== null) {
             unset($this->items[$this->index]);
+            $this->items = array_values($this->items);
             return;
         }
         array_pop($this->items);
