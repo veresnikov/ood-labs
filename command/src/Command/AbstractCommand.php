@@ -23,7 +23,7 @@ abstract class AbstractCommand implements CommandInterface
         }
     }
 
-    protected function IsCompleted(): bool
+    private function IsCompleted(): bool
     {
         return $this->completed;
     }

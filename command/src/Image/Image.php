@@ -56,6 +56,7 @@ class Image implements ImageInterface
 
     public function Resize(int $width, int $height): void
     {
+        // туду: вынести на уровень выше
         $this->history->Execute(new ResizeImageCommand($this->width, $this->height, $width, $height));
     }
 
