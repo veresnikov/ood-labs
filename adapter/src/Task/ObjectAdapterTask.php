@@ -11,7 +11,7 @@ use App\ShapeDrawingLib\Point;
 use App\ShapeDrawingLib\Rectangle;
 use App\ShapeDrawingLib\Triangle;
 
-class ExampleTask implements TaskInterface
+class ObjectAdapterTask implements TaskInterface
 {
 
     public function Execute(int $argc, array $argv): void
