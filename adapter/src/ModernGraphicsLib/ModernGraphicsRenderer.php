@@ -7,6 +7,9 @@ class ModernGraphicsRenderer
 {
     private bool $drawing = false;
 
+    /**
+     * @param resource $strm
+     */
     public function __construct(
         private $strm,
     )
@@ -38,12 +41,12 @@ class ModernGraphicsRenderer
         $y1 = $start->y;
         $x2 = $end->x;
         $y2 = $end->y;
-        fwrite($this->strm, "  <line fromX=\"$x1\" fromY=\"$y1\" toX=\"$x2\" toY=\"$y2\>" . PHP_EOL);
+        fwrite($this->strm, "  <line fromX=\"$x1\" fromY=\"$y1\" toX=\"$x2\" toY=\"$y2\" \>" . PHP_EOL);
     }
 
     public function EndDraw(): void
     {
-        if ($this->drawing) {
+        if (!$this->drawing) {
             throw new \LogicException("Drawing has not been started");
         }
         fwrite($this->strm, "</draw>" . PHP_EOL);
