@@ -37,7 +37,9 @@ class ClassAdapterTask implements TaskInterface
 
     private function PaintPictureOnCanvas(): void
     {
-        $canvasPainter = new CanvasPainter(new Canvas());
+        $canvas = new Canvas();
+        $canvasPainter = new CanvasPainter($canvas);
+        $canvas->SetColor(0xFFF111);
         $this->PaintPicture($canvasPainter);
     }
 
@@ -46,6 +48,7 @@ class ClassAdapterTask implements TaskInterface
         $adapter = new ModernGraphicsLibClassAdapter(STDOUT);
         $canvasPainter = new CanvasPainter($adapter);
         $adapter->BeginDraw();
+        $adapter->SetColor(0xFFF111);
         $this->PaintPicture($canvasPainter);
         $adapter->EndDraw();
     }

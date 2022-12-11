@@ -14,14 +14,18 @@ class ModernGraphicsLibClassAdapterTest extends TestCase
         $startPointY = 42;
         $endPointX = $startPointX * 2;
         $endPointY = $startPointY * 2;
+        $color = 0xFFF111;
         $expected = "<draw>" . PHP_EOL .
-            "  <line fromX=\"$startPointX\" fromY=\"$startPointY\" toX=\"$endPointX\" toY=\"$endPointY\" \>" . PHP_EOL .
+            "  <line fromX=\"$startPointX\" fromY=\"$startPointY\" toX=\"$endPointX\" toY=\"$endPointY\">" . PHP_EOL .
+            "    <color r=\"1\" g=\"0.95\" b=\"0.07\" a=\"1\" />" . PHP_EOL .
+            "  </line>" . PHP_EOL .
             "</draw>" . PHP_EOL;
 
         $tempFile = tmpfile();
 
         $adapter = new ModernGraphicsLibClassAdapter($tempFile);
         $adapter->BeginDraw();
+        $adapter->SetColor($color);
         $adapter->MoveTo($startPointX, $startPointY);
         $adapter->LineTo($endPointX, $endPointY);
         $adapter->EndDraw();

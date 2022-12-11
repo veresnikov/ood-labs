@@ -32,7 +32,7 @@ class ModernGraphicsRenderer
         $this->drawing = true;
     }
 
-    public function DrawLine(Point $start, Point $end): void
+    public function DrawLine(Point $start, Point $end, RGBAColor $color): void
     {
         if (!$this->drawing) {
             throw new \LogicException("DrawLine is allowed between BeginDraw()/EndDraw() only");
@@ -41,7 +41,14 @@ class ModernGraphicsRenderer
         $y1 = $start->y;
         $x2 = $end->x;
         $y2 = $end->y;
-        fwrite($this->strm, "  <line fromX=\"$x1\" fromY=\"$y1\" toX=\"$x2\" toY=\"$y2\" \>" . PHP_EOL);
+        $output = "  <line fromX=\"$x1\" fromY=\"$y1\" toX=\"$x2\" toY=\"$y2\">" . PHP_EOL;
+        $r = round($color->r, 2);
+        $g = round($color->g, 2);
+        $b = round($color->b, 2);
+        $a = round($color->a, 2);
+        $output = $output . "    <color r=\"$r\" g=\"$g\" b=\"$b\" a=\"$a\" />" . PHP_EOL;
+        $output = $output . "  </line>" . PHP_EOL;
+        fwrite($this->strm, $output);
     }
 
     public function EndDraw(): void

@@ -8,4 +8,6 @@ interface CanvasInterface
     public function MoveTo(int $x, int $y): void;
 
     public function LineTo(int $x, int $y): void;
+
+    public function SetColor(int $rgbColor): void;
 }

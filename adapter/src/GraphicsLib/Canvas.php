@@ -14,4 +14,9 @@ class Canvas implements CanvasInterface
     {
         echo "LineTo ($x, $y)" . PHP_EOL;
     }
+
+    public function SetColor(int $rgbColor): void
+    {
+        echo "SetColor " . sprintf("(#%08d)", decbin($rgbColor)) . PHP_EOL;
+    }
 }
