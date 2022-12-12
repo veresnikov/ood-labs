@@ -4,9 +4,7 @@ declare(strict_types=1);
 namespace App\Task;
 
 use App\Application\ModernGraphicsLibClassAdapter;
-use App\Application\ModernGraphicsLibObjectAdapter;
 use App\GraphicsLib\Canvas;
-use App\ModernGraphicsLib\ModernGraphicsRenderer;
 use App\ShapeDrawingLib\CanvasPainter;
 use App\ShapeDrawingLib\Point;
 use App\ShapeDrawingLib\Rectangle;
