@@ -25,6 +25,7 @@ class DeleteItemCommand extends AbstractCommand
         }
         $this->deletedItem = &$this->items[$this->index];
         unset($this->items[$this->index]);
+        $this->items = array_values($this->items);
     }
 
     protected function DoRollback(): void
