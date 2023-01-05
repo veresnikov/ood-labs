@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+composer install --no-cache || exit 1
+
+composer server-start || exit 1

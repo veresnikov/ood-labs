@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+PROJECT_ROOT="$(dirname "$(dirname "$(readlink -fm "$0")")")"
+export USER_ID=$(id -u)
+export GROUP_ID=$(id -g)
+
+pushd "$PROJECT_ROOT" > /dev/null || exit
+docker-compose down
+popd > /dev/null || exit
