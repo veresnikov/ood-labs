@@ -7,6 +7,7 @@ abstract class Observable<Type> {
         })
         if (index === -1) {
             this.observers.push(observer)
+            this.InitializeObserver(observer)
             return
         }
         throw new Error("observer already registered")
@@ -27,6 +28,11 @@ abstract class Observable<Type> {
         this.observers.forEach((observer) => {
             observer.Update(data)
         })
+    }
+
+    private InitializeObserver(observer: Observer<Type>): void {
+        const data = this.GetChangedData()
+        observer.Update(data)
     }
 
     protected abstract GetChangedData(): Type;

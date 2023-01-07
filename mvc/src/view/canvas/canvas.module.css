@@ -1,0 +1,7 @@
+.canvas {
+    display: block;
+    background-color: antiquewhite;
+    width: 1024px;
+    height: 720px;
+    border: 1px solid lightcyan;
+}

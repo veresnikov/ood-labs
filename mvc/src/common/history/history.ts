@@ -1,4 +1,4 @@
-import {CommandInterface} from "../command/command";
+import {CommandInterface} from "../command/abstractCommand";
 
 interface HistoryInterface {
     CanUndo(): boolean

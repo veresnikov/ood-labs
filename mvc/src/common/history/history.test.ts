@@ -1,4 +1,4 @@
-import {AbstractCommand} from "../command/command";
+import {AbstractCommand} from "../command/abstractCommand";
 import {History} from "./history";
 
 class Target {
