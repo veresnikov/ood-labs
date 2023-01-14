@@ -10,6 +10,7 @@ interface RectangleProps {
     fillColor: Color
     outlineColor: Color
     outlineThickness: number
+    selectFunc: () => void
 }
 
 function Rectangle(data: RectangleProps) {
@@ -25,6 +26,7 @@ function Rectangle(data: RectangleProps) {
             fill={data.fillColor}
             stroke={data.outlineColor}
             strokeWidth={data.outlineThickness}
+            onClick={data.selectFunc}
         />
     )
 }

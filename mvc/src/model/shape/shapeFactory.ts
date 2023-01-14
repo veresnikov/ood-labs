@@ -14,7 +14,10 @@ class ShapeFactory {
             case ShapeType.Ellipse:
                 return new Ellipse(
                     id,
-                    DefaultValues.defaultCreatePoint,
+                    {
+                        x: DefaultValues.canvasWidth / 2,
+                        y: DefaultValues.canvasHeight / 2
+                    },
                     DefaultValues.defaultFrameHeight / 2,
                     DefaultValues.defaultFrameWidth / 2
                 )
@@ -22,25 +25,32 @@ class ShapeFactory {
             case ShapeType.Rectangle:
                 return new Rectangle(
                     id,
-                    DefaultValues.defaultCreatePoint,
+                    {
+                        x: DefaultValues.canvasWidth / 2 - DefaultValues.defaultFrameWidth / 2,
+                        y: DefaultValues.canvasHeight / 2 - DefaultValues.defaultFrameHeight / 2
+                    },
                     DefaultValues.defaultFrameHeight,
                     DefaultValues.defaultFrameWidth,
                 )
             // eslint-disable-next-line
             case ShapeType.Triangle:
+                let point = {
+                    x: DefaultValues.canvasWidth / 2,
+                    y: DefaultValues.canvasHeight / 2
+                }
                 return new Triangle(
                     id,
                     {
-                        x: DefaultValues.defaultCreatePoint.x + (DefaultValues.defaultFrameWidth / 2),
-                        y: DefaultValues.defaultCreatePoint.y,
+                        x: point.x,
+                        y: point.y - DefaultValues.defaultFrameHeight / 2,
                     },
                     {
-                        x: DefaultValues.defaultCreatePoint.x + DefaultValues.defaultFrameWidth,
-                        y: DefaultValues.defaultCreatePoint.y + DefaultValues.defaultFrameHeight,
+                        x: point.x + DefaultValues.defaultFrameWidth / 2,
+                        y: point.y + DefaultValues.defaultFrameHeight / 2,
                     },
                     {
-                        x: DefaultValues.defaultCreatePoint.x,
-                        y: DefaultValues.defaultCreatePoint.y + DefaultValues.defaultFrameWidth,
+                        x: point.x - DefaultValues.defaultFrameWidth / 2,
+                        y: point.y + DefaultValues.defaultFrameHeight / 2,
                     },
                 )
             default:

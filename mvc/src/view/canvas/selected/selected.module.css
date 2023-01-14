@@ -1,0 +1,7 @@
+.selected {
+    display: block;
+    fill: transparent;
+    stroke: black;
+    stroke-width: 3px;
+    stroke-dasharray: 5;
+}

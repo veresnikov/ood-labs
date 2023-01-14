@@ -6,15 +6,20 @@ import {Triangle as TriangleView} from "./triangle/triangle";
 import {Ellipse} from "../../../model/shape/ellipse";
 import {Rectangle} from "../../../model/shape/rectangle";
 import {Triangle} from "../../../model/shape/triangle";
+import {ControllerFunctions} from "../../common/controllerFunctions";
 
 interface ItemsProps {
     items: Shape[]
+    controller: ControllerFunctions
 }
 
 function Items(props: ItemsProps) {
     return (
         <>
             {props.items.map((item) => {
+                const selectFunc = () => {
+                    props.controller.SelectShape(item.GetID())
+                }
                 switch (item.GetType()) {
                     case ShapeType.Ellipse:
                         const ellipse = item as Ellipse
@@ -27,6 +32,7 @@ function Items(props: ItemsProps) {
                             fillColor={ellipse.GetFillColor()}
                             outlineColor={ellipse.GetOutlineColor()}
                             outlineThickness={ellipse.GetOutlineThickness()}
+                            selectFunc={selectFunc}
                         />
                     case ShapeType.Rectangle:
                         const rectangle = item as Rectangle
@@ -39,6 +45,7 @@ function Items(props: ItemsProps) {
                             fillColor={rectangle.GetFillColor()}
                             outlineColor={rectangle.GetOutlineColor()}
                             outlineThickness={rectangle.GetOutlineThickness()}
+                            selectFunc={selectFunc}
                         />
                     case ShapeType.Triangle:
                         const triangle = item as Triangle
@@ -51,6 +58,7 @@ function Items(props: ItemsProps) {
                             fillColor={triangle.GetFillColor()}
                             outlineColor={triangle.GetOutlineColor()}
                             outlineThickness={triangle.GetOutlineThickness()}
+                            selectFunc={selectFunc}
                         />
                     default:
                         return null

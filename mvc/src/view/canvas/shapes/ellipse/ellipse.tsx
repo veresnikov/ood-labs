@@ -10,6 +10,7 @@ interface EllipseProps {
     fillColor: Color
     outlineColor: Color
     outlineThickness: number
+    selectFunc: () => void
 }
 
 function Ellipse(data: EllipseProps) {
@@ -18,13 +19,14 @@ function Ellipse(data: EllipseProps) {
         <ellipse
             ref={ref}
             id={data.id}
-            cx={data.center.x + data.width}
-            cy={data.center.y + data.height}
+            cx={data.center.x}
+            cy={data.center.y}
             rx={data.width}
             ry={data.height}
             fill={data.fillColor}
             stroke={data.outlineColor}
             strokeWidth={data.outlineThickness}
+            onClick={data.selectFunc}
         />
     )
 }

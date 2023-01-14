@@ -30,17 +30,17 @@ class Triangle extends Shape {
     }
 
     GetFrame(): Frame {
-        let minX = Math.min(this.vertex1.x, this.vertex2.x, this.vertex2.x)
-        let minY = Math.min(this.vertex1.y, this.vertex2.y, this.vertex2.y)
-        let maxX = Math.max(this.vertex1.x, this.vertex2.x, this.vertex2.x)
-        let maxY = Math.max(this.vertex1.y, this.vertex2.y, this.vertex2.y)
+        let minX = Math.min(this.vertex1.x, this.vertex2.x, this.vertex3.x)
+        let minY = Math.min(this.vertex1.y, this.vertex2.y, this.vertex3.y)
+        let maxX = Math.max(this.vertex1.x, this.vertex2.x, this.vertex3.x)
+        let maxY = Math.max(this.vertex1.y, this.vertex2.y, this.vertex3.y)
         return new Frame(
             {
                 x: minX,
                 y: minY,
             },
             maxX - minX,
-            maxY - minX,
+            maxY - minY,
         )
     }
 

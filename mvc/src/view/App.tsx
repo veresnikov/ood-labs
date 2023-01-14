@@ -3,6 +3,8 @@ import {Editor, EditorViewData} from "../model/editor/editor";
 import {Editor as EditorView} from "./editor/editor";
 import ReactDOM from "react-dom/client";
 import React from "react";
+import {Controller} from "../controller/controller";
+import {BuildControllerFunctions} from "./common/controllerFunctions";
 
 class EditorObserver extends Observer<EditorViewData> {
     private readonly callback: Function
@@ -12,22 +14,16 @@ class EditorObserver extends Observer<EditorViewData> {
         this.callback = callback
     }
 
-    Update(data: EditorViewData | null): void {
-        if (data === null) {
-            data = {
-                selectedShape: null,
-                shapes: [],
-            }
-        }
+    Update(data: EditorViewData): void {
         this.callback(data)
     }
 }
 
-function App(root: ReactDOM.Root, editor: Editor) {
+function App(root: ReactDOM.Root, editor: Editor, controller: Controller) {
     const renderFunc = (data: EditorViewData) => {
         root.render(
             <React.StrictMode>
-                <EditorView selectedShape={data.selectedShape} shapes={data.shapes}></EditorView>
+                <EditorView data={data} controllerFunctions={BuildControllerFunctions(controller)} />
             </React.StrictMode>
         )
     }

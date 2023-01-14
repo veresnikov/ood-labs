@@ -10,6 +10,7 @@ interface TriangleProps {
     fillColor: Color
     outlineColor: Color
     outlineThickness: number
+    selectFunc: () => void
 }
 
 function Triangle(data: TriangleProps) {
@@ -26,6 +27,7 @@ function Triangle(data: TriangleProps) {
             fill={data.fillColor}
             stroke={data.outlineColor}
             strokeWidth={data.outlineThickness}
+            onClick={data.selectFunc}
         />
     )
 }

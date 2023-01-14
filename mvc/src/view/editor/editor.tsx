@@ -2,11 +2,17 @@ import styles from "./editor.module.css"
 import {EditorViewData} from "../../model/editor/editor";
 import {Toolbar} from "../toolbar/toolbar";
 import {Canvas} from "../canvas/canvas";
+import {ControllerFunctions} from "../common/controllerFunctions";
 
-function Editor(data: EditorViewData) {
+interface EditorViewProps {
+    data: EditorViewData
+    controllerFunctions: ControllerFunctions
+}
+
+function Editor(props: EditorViewProps) {
     return <div className={styles.editor}>
-        <Toolbar></Toolbar>
-        <Canvas selectedShape={data.selectedShape} shapes={data.shapes}></Canvas>
+        <Toolbar controller={props.controllerFunctions}></Toolbar>
+        <Canvas data={props.data} controller={props.controllerFunctions}/>
     </div>
 }
 

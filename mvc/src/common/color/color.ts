@@ -1,3 +1,5 @@
+import {Find} from "../enum/find";
+
 enum Color {
     Red = "#FF3333",
     Green = "#51FF33",
@@ -8,4 +10,11 @@ enum Color {
     White = "#FFFFFF",
 }
 
-export {Color}
+function FindColorByValue(title: string): Color | null {
+    let color = Find(Object.values(Color), (c: string) => {
+        return c === title
+    })
+    return (color !== null) ? color as Color : null
+}
+
+export {Color, FindColorByValue}

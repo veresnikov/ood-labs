@@ -1,18 +1,16 @@
 import {AbstractCommand} from "../../common/command/abstractCommand";
-import {Shape} from "../shape/shape";
 import {Frame} from "../frame/frame";
+import {Shape} from "../shape/shape";
 
-class EditFrameShapeCommand extends AbstractCommand {
+class EditShapeFrameCommand extends AbstractCommand {
     private readonly oldFrame: Frame
-
     private readonly newFrame: Frame
-
     private shape: &Shape
 
     constructor(newFrame: Frame, shape: &Shape) {
-        super()
-        this.oldFrame = shape.GetFrame()
+        super();
         this.newFrame = newFrame
+        this.oldFrame = shape.GetFrame()
         this.shape = shape
     }
 
@@ -25,4 +23,4 @@ class EditFrameShapeCommand extends AbstractCommand {
     }
 }
 
-export {EditFrameShapeCommand}
+export {EditShapeFrameCommand}
