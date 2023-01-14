@@ -2,6 +2,8 @@ import {Editor} from "../model/editor/editor";
 import {FindShapeTypeByValue} from "../model/shape/shapeType";
 import {FindColorByValue} from "../common/color/color";
 import {Find} from "../common/enum/find";
+import {Frame} from "../model/frame/frame";
+import {Point} from "../common/point/point";
 
 class Controller {
     private editor: Editor
@@ -38,6 +40,26 @@ class Controller {
         if (outlineColor !== null) {
             this.editor.SetOutlineColorShape(outlineColor)
         }
+    }
+
+    MoveShape(topLeft: Point): void {
+        this.editor.MoveShape(topLeft)
+    }
+
+    Undo(): void {
+        this.editor.Undo()
+    }
+
+    CanUndo(): boolean {
+        return this.editor.CanUndo()
+    }
+
+    Redo(): void {
+        this.editor.Redo()
+    }
+
+    CanRedo(): boolean {
+        return this.editor.CanRedo()
     }
 }
 

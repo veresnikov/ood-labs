@@ -1,4 +1,5 @@
 import {Controller} from "../../controller/controller";
+import {Point} from "../../common/point/point";
 
 interface ControllerFunctions {
     SelectShape(id: string): void
@@ -8,6 +9,16 @@ interface ControllerFunctions {
     SetFillColor(color: string): void
 
     SetOutlineColor(color: string): void
+
+    MoveShape(topLeft: Point): void
+
+    Undo(): void
+
+    CanUndo(): boolean
+
+    Redo(): void
+
+    CanRedo(): boolean
 }
 
 function BuildControllerFunctions(controller: Controller): ControllerFunctions {
@@ -23,7 +34,22 @@ function BuildControllerFunctions(controller: Controller): ControllerFunctions {
         },
         SetOutlineColor(color: string): void {
             controller.SetOutlineColor(color)
-        }
+        },
+        MoveShape(topLeft: Point) {
+            controller.MoveShape(topLeft)
+        },
+        Undo() {
+            controller.Undo()
+        },
+        CanUndo() {
+            return controller.CanUndo()
+        },
+        Redo() {
+            controller.Redo()
+        },
+        CanRedo() {
+            return controller.CanRedo()
+        },
     }
 }
 

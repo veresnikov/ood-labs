@@ -2,7 +2,7 @@ import styles from "./editor.module.css"
 import {EditorViewData} from "../../model/editor/editor";
 import {Toolbar} from "../toolbar/toolbar";
 import {Canvas} from "../canvas/canvas";
-import {ControllerFunctions} from "../common/controllerFunctions";
+import {ControllerFunctions} from "../controller/controllerFunctions";
 
 interface EditorViewProps {
     data: EditorViewData

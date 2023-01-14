@@ -6,11 +6,14 @@ import {Triangle as TriangleView} from "./triangle/triangle";
 import {Ellipse} from "../../../model/shape/ellipse";
 import {Rectangle} from "../../../model/shape/rectangle";
 import {Triangle} from "../../../model/shape/triangle";
-import {ControllerFunctions} from "../../common/controllerFunctions";
+import {ControllerFunctions} from "../../controller/controllerFunctions";
+import {FrameWithId} from "../canvas";
 
 interface ItemsProps {
     items: Shape[]
     controller: ControllerFunctions
+    setFrame: (frame: FrameWithId | null) => void
+    frame: FrameWithId | null
 }
 
 function Items(props: ItemsProps) {
@@ -26,13 +29,10 @@ function Items(props: ItemsProps) {
                         return <EllipseView
                             key={ellipse.GetID()}
                             id={ellipse.GetID()}
-                            center={ellipse.GetCenter()}
-                            height={ellipse.GetHeight()}
-                            width={ellipse.GetWight()}
-                            fillColor={ellipse.GetFillColor()}
-                            outlineColor={ellipse.GetOutlineColor()}
-                            outlineThickness={ellipse.GetOutlineThickness()}
+                            ellipse={ellipse}
                             selectFunc={selectFunc}
+                            frame={props.frame}
+                            setFrame={props.setFrame}
                         />
                     case ShapeType.Rectangle:
                         const rectangle = item as Rectangle

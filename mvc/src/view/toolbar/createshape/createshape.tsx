@@ -1,7 +1,7 @@
 import styles from "./createshape.module.css"
 import {Createshapebutton} from "./createshapebutton/createshapebutton";
 import {ShapeType} from "../../../model/shape/shapeType";
-import {ControllerFunctions} from "../../common/controllerFunctions";
+import {ControllerFunctions} from "../../controller/controllerFunctions";
 
 interface CreateShapeProps {
     controller: ControllerFunctions
@@ -16,6 +16,7 @@ function Createshape(props: CreateShapeProps) {
                     if (isNaN(Number(shape))) {
                         return <Createshapebutton key={index} shape={shape} controller={props.controller}/>
                     }
+                    return null
                 })}
             </>
         </div>
