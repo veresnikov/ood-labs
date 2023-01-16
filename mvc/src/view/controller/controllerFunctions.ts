@@ -2,7 +2,7 @@ import {Controller} from "../../controller/controller";
 import {Point} from "../../common/point/point";
 
 interface ControllerFunctions {
-    SelectShape(id: string): void
+    SelectShape(id: string| null): void
 
     CreateShape(type: string): void
 
@@ -28,7 +28,7 @@ function BuildControllerFunctions(controller: Controller): ControllerFunctions {
         CreateShape(type: string): void {
             controller.CreateShape(type)
         },
-        SelectShape(id: string): void {
+        SelectShape(id: string | null): void {
             controller.SelectShape(id)
         },
         SetFillColor(color: string): void {

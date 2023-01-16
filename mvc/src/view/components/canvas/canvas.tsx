@@ -1,7 +1,7 @@
 import styles from "./canvas.module.css"
-import {EditorViewData} from "../../model/editor/editor";
-import {ControllerFunctions} from "../controller/controllerFunctions";
-import {DefaultValues} from "../../defaultValues";
+import {EditorViewData} from "../../../model/editor/editor";
+import {ControllerFunctions} from "../../controller/controllerFunctions";
+import {DefaultValues} from "../../../defaultValues";
 import {Wrapper} from "./wrapper/wrapper";
 
 interface CanvasViewProps {

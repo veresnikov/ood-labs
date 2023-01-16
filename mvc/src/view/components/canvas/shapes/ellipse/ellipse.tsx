@@ -1,5 +1,5 @@
 import {useEffect, useRef} from "react";
-import {Ellipse as EllipseModel} from "../../../../model/shape/ellipse";
+import {Ellipse as EllipseModel} from "../../../../../model/shape/ellipse";
 import {ShapeFrameProps} from "../../wrapper/wrapper";
 
 interface EllipseProps extends ShapeFrameProps {

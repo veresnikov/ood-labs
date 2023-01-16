@@ -1,11 +1,12 @@
 import styles from "./selected.module.css"
 import {useRef} from "react";
-import {Shape} from "../../../model/shape/shape";
-import {useMoving} from "../../hooks/useMoving";
-import {Point} from "../../../common/point/point";
-import {ControllerFunctions} from "../../controller/controllerFunctions";
+import {Shape} from "../../../../model/shape/shape";
+import {useMoving} from "../../../hooks/useMoving";
+import {Point} from "../../../../common/point/point";
+import {ControllerFunctions} from "../../../controller/controllerFunctions";
 import {ShapeFrameProps} from "../wrapper/wrapper";
-import {useResize} from "../../hooks/useResize";
+import {useResize} from "../../../hooks/useResize";
+import {useOutsideClick} from "../../../hooks/useOutsideClick";
 
 interface SelectedProps extends ShapeFrameProps {
     selectedShape: Shape
@@ -38,8 +39,14 @@ function Selected(props: SelectedProps) {
         props.controllerFunc.ResizeShape(width, height)
     })
 
+    const selectedContainerRef = useRef(null)
+
+    useOutsideClick(selectedContainerRef, () => {
+        props.controllerFunc.SelectShape(null)
+    })
+
     return (
-        <>
+        <g ref={selectedContainerRef}>
             <rect
                 className={styles.selected}
                 ref={selectorRef}
@@ -54,7 +61,7 @@ function Selected(props: SelectedProps) {
                 cy={props.frame.topLeft.y + props.frame.height}
                 r={5}
             />
-        </>
+        </g>
     )
 }
 

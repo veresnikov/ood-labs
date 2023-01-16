@@ -1,6 +1,6 @@
 import styles from "./history.module.css"
 import {Historybutton} from "./historybutton/historybutton";
-import {ControllerFunctions} from "../../controller/controllerFunctions";
+import {ControllerFunctions} from "../../../controller/controllerFunctions";
 
 interface HistoryProps {
     controller: ControllerFunctions

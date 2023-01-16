@@ -1,5 +1,5 @@
 import {useEffect, useRef} from "react";
-import {Triangle as TriangleModel} from "../../../../model/shape/triangle";
+import {Triangle as TriangleModel} from "../../../../../model/shape/triangle";
 import {ShapeFrameProps} from "../../wrapper/wrapper";
 
 interface TriangleProps extends ShapeFrameProps {

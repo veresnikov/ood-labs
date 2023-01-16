@@ -1,5 +1,5 @@
 import {useEffect, useRef} from "react";
-import {Rectangle as RectangleModel} from "../../../../model/shape/rectangle";
+import {Rectangle as RectangleModel} from "../../../../../model/shape/rectangle";
 import {ShapeFrameProps} from "../../wrapper/wrapper";
 
 interface RectangleProps extends ShapeFrameProps {

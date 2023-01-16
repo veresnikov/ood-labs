@@ -1,7 +1,7 @@
 import {Editor} from "../model/editor/editor";
 import {FindShapeTypeByValue} from "../model/shape/shapeType";
 import {FindColorByValue} from "../common/color/color";
-import {Find} from "../common/enum/find";
+import {Find} from "../common/utils/find";
 import {Point} from "../common/point/point";
 
 class Controller {
@@ -11,7 +11,10 @@ class Controller {
         this.editor = editor
     }
 
-    SelectShape(id: string): void {
+    SelectShape(id: string | null): void {
+        if (id === null) {
+            this.editor.SelectShape(null)
+        }
         let shape = Find(this.editor.GetShapes(), (shape) => {
             return shape.GetID() === id
         })

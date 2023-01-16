@@ -1,4 +1,4 @@
-import {Find} from "../../common/enum/find";
+import {Find} from "../../common/utils/find";
 
 enum ShapeType {
     Ellipse = "Ellipse",

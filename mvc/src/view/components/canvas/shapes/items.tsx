@@ -1,12 +1,12 @@
-import {Shape} from "../../../model/shape/shape";
-import {ShapeType} from "../../../model/shape/shapeType";
+import {Shape} from "../../../../model/shape/shape";
+import {ShapeType} from "../../../../model/shape/shapeType";
 import {Ellipse as EllipseView} from "./ellipse/ellipse";
 import {Rectangle as RectangleView} from "./rectangle/rectangle";
 import {Triangle as TriangleView} from "./triangle/triangle";
-import {Ellipse} from "../../../model/shape/ellipse";
-import {Rectangle} from "../../../model/shape/rectangle";
-import {Triangle} from "../../../model/shape/triangle";
-import {ControllerFunctions} from "../../controller/controllerFunctions";
+import {Ellipse} from "../../../../model/shape/ellipse";
+import {Rectangle} from "../../../../model/shape/rectangle";
+import {Triangle} from "../../../../model/shape/triangle";
+import {ControllerFunctions} from "../../../controller/controllerFunctions";
 import {ShapeFrameProps} from "../wrapper/wrapper";
 
 interface ItemsProps extends ShapeFrameProps {

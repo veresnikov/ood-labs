@@ -1,6 +1,6 @@
 import {Observer} from "../common/observer/observer";
 import {Editor, EditorViewData} from "../model/editor/editor";
-import {Editor as EditorView} from "./editor/editor";
+import {Editor as EditorView} from "./components/editor/editor";
 import ReactDOM from "react-dom/client";
 import React from "react";
 import {Controller} from "../controller/controller";
@@ -21,7 +21,6 @@ class EditorObserver extends Observer<EditorViewData> {
 
 function App(root: ReactDOM.Root, editor: Editor, controller: Controller) {
     const renderFunc = (data: EditorViewData) => {
-        console.log(editor)
         root.render(
             <React.StrictMode>
                 <EditorView data={data} controllerFunctions={BuildControllerFunctions(controller)} />

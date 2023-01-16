@@ -70,7 +70,11 @@ class Editor extends Observable<EditorViewData> {
     }
 
     public CreateShape(type: ShapeType): void {
-        this.Execute(new CreateShapeCommand(type, this.shapes))
+        this.Execute(new CreateShapeCommand(type, this.shapes, (shape: Shape) => {
+            if (shape === this.selectedShape) {
+                this.SelectShape(null)
+            }
+        }))
     }
 
     public GetShapes(): Shape[] {

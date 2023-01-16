@@ -1,7 +1,7 @@
 import styles from "./toolbar.module.css"
 import {Colorpicker} from "./colorpicker/colorpicker";
 import {Createshape} from "./createshape/createshape";
-import {ControllerFunctions} from "../controller/controllerFunctions";
+import {ControllerFunctions} from "../../controller/controllerFunctions";
 import {History} from "./history/history";
 
 interface ToolbarProps {

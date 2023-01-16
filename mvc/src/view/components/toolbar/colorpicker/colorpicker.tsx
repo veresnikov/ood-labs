@@ -1,5 +1,5 @@
 import styles from "./colorpicker.module.css"
-import {Color} from "../../../common/color/color";
+import {Color} from "../../../../common/color/color";
 import {Colorbutton} from "./colorbutton/colorbutton";
 
 interface ColorPickerProps {

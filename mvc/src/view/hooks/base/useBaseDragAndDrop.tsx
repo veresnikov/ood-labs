@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect, useRef} from "react";
 import {Point} from "../../../common/point/point";
 
 type PositionHandler = (position: Point) => void
@@ -8,18 +8,18 @@ export function UseBaseDragAndDrop(
     onMouseUpCallback?: PositionHandler,
     onMouseDownCallback?: PositionHandler,
 ) {
-    let pagePosition: Point
-    let currentPosition: Point
+    const pagePosition = useRef<Point>({x: 0, y: 0})
+    let currentPosition = useRef<Point>({x: 0, y: 0})
     const handleMouseMove = useCallback((e: MouseEvent) => {
-        currentPosition = {
-            x: e.pageX - pagePosition.x,
-            y: e.pageY - pagePosition.y,
+        currentPosition.current = {
+            x: e.pageX - pagePosition.current.x,
+            y: e.pageY - pagePosition.current.y,
         }
-        onMouseMoveCallback?.(currentPosition)
+        onMouseMoveCallback?.(currentPosition.current)
     }, [onMouseMoveCallback])
 
-    const handleMouseUp = useCallback((e: MouseEvent) => {
-        onMouseUpCallback?.(currentPosition)
+    const handleMouseUp = useCallback((_: MouseEvent) => {
+        onMouseUpCallback?.(currentPosition.current)
 
         document.removeEventListener('mousemove', handleMouseMove)
         document.removeEventListener('mouseup', handleMouseUp)
@@ -27,15 +27,15 @@ export function UseBaseDragAndDrop(
     }, [handleMouseMove, onMouseUpCallback])
 
     const handleMouseDown = useCallback((e: Event) => {
-        pagePosition = {
+        pagePosition.current = {
             x: (e as MouseEvent).pageX,
             y: (e as MouseEvent).pageY
         }
-        onMouseDownCallback?.(pagePosition)
+        onMouseDownCallback?.(pagePosition.current)
 
         document.addEventListener('mousemove', handleMouseMove)
         document.addEventListener('mouseup', handleMouseUp)
-    }, [handleMouseMove, onMouseUpCallback, onMouseDownCallback])
+    }, [handleMouseMove, handleMouseUp, onMouseDownCallback])
 
     useEffect(() => {
         if (!ref.current) {

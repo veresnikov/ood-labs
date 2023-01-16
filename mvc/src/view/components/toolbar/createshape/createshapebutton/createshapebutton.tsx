@@ -1,5 +1,5 @@
 import styles from "./createshapebutton.module.css"
-import {ControllerFunctions} from "../../../controller/controllerFunctions";
+import {ControllerFunctions} from "../../../../controller/controllerFunctions";
 
 interface ColorButtonProps {
     shape: string

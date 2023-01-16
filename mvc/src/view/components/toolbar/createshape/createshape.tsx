@@ -1,7 +1,7 @@
 import styles from "./createshape.module.css"
 import {Createshapebutton} from "./createshapebutton/createshapebutton";
-import {ShapeType} from "../../../model/shape/shapeType";
-import {ControllerFunctions} from "../../controller/controllerFunctions";
+import {ShapeType} from "../../../../model/shape/shapeType";
+import {ControllerFunctions} from "../../../controller/controllerFunctions";
 
 interface CreateShapeProps {
     controller: ControllerFunctions

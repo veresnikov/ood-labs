@@ -1,7 +1,7 @@
-import {EditorViewData} from "../../../model/editor/editor";
-import {ControllerFunctions} from "../../controller/controllerFunctions";
+import {EditorViewData} from "../../../../model/editor/editor";
+import {ControllerFunctions} from "../../../controller/controllerFunctions";
 import {useState} from "react";
-import {Frame} from "../../../model/frame/frame";
+import {Frame} from "../../../../model/frame/frame";
 import {Items} from "../shapes/items";
 import {Selected} from "../selected/selected";
 

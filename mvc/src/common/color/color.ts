@@ -1,4 +1,4 @@
-import {Find} from "../enum/find";
+import {Find} from "../utils/find";
 
 enum Color {
     Red = "#FF3333",

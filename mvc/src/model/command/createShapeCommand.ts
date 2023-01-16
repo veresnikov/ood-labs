@@ -7,13 +7,14 @@ class CreateShapeCommand extends AbstractCommand {
     private readonly type: ShapeType
 
     private shapes: &Shape[]
-
     private newShape: Shape | null = null
+    private unselectCallback: (shape: Shape) => void
 
-    constructor(type: ShapeType, shapes: &Shape[]) {
+    constructor(type: ShapeType, shapes: &Shape[], unselectCallback: (shape: Shape) => void) {
         super()
         this.type = type
         this.shapes = shapes
+        this.unselectCallback = unselectCallback
     }
 
     protected doExecute(): void {
@@ -25,6 +26,7 @@ class CreateShapeCommand extends AbstractCommand {
 
     protected doRollback(): void {
         this.shapes.pop()
+        this.newShape !== null && this.unselectCallback(this.newShape)
     }
 }
 
