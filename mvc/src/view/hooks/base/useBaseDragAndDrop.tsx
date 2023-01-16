@@ -9,7 +9,8 @@ export function UseBaseDragAndDrop(
     onMouseDownCallback?: PositionHandler,
 ) {
     const pagePosition = useRef<Point>({x: 0, y: 0})
-    let currentPosition = useRef<Point>({x: 0, y: 0})
+    const currentPosition = useRef<Point>({x: 0, y: 0})
+
     const handleMouseMove = useCallback((e: MouseEvent) => {
         currentPosition.current = {
             x: e.pageX - pagePosition.current.x,
