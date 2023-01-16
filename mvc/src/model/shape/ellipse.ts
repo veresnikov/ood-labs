@@ -9,7 +9,14 @@ class Ellipse extends Shape {
     private height: number
     private width: number
 
-    constructor(id: string, center: Point, height: number, width: number, fillColor: Color | null = null, outlineColor: Color | null = null, outlineThickness: number | null = null) {
+    constructor(
+        id: string,
+        center: Point,
+        height: number,
+        width: number,
+        fillColor: Color | null = null,
+        outlineColor: Color | null = null,
+        outlineThickness: number | null = null) {
         super(id, fillColor, outlineColor, outlineThickness);
         this.center = center
         this.height = height
@@ -29,22 +36,22 @@ class Ellipse extends Shape {
     }
 
     GetFrame(): Frame {
-        return new Frame(
-            {
+        return {
+            topLeft: {
                 x: this.center.x - this.width,
-                y: this.center.y - this.height,
+                y: this.center.y - this.height
             },
-            this.width * 2,
-            this.height * 2,
-        )
+            width: this.width * 2,
+            height: this.height * 2
+        }
     }
 
     SetFrame(frame: Frame): void {
-        this.width = frame.GetWidth() / 2
-        this.height = frame.GetHeight() / 2
+        this.width = frame.width / 2
+        this.height = frame.height / 2
         this.center = {
-            x: frame.GetTopLeft().x + this.width,
-            y: frame.GetTopLeft().y + this.height,
+            x: frame.topLeft.x + this.width,
+            y: frame.topLeft.y + this.height,
         }
     }
 

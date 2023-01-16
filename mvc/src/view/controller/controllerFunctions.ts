@@ -12,6 +12,8 @@ interface ControllerFunctions {
 
     MoveShape(topLeft: Point): void
 
+    ResizeShape(width: number, height: number): void
+
     Undo(): void
 
     CanUndo(): boolean
@@ -37,6 +39,9 @@ function BuildControllerFunctions(controller: Controller): ControllerFunctions {
         },
         MoveShape(topLeft: Point) {
             controller.MoveShape(topLeft)
+        },
+        ResizeShape(width: number, height: number) {
+            controller.ResizeShape(width, height)
         },
         Undo() {
             controller.Undo()

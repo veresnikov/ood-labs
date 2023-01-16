@@ -47,8 +47,8 @@ class Editor extends Observable<EditorViewData> {
     public ResizeShape(newWidth: number, newHeight: number): void {
         if (this.selectedShape !== null) {
             let frame = this.selectedShape.GetFrame()
-            frame.SetWidth(newWidth)
-            frame.SetHeight(newHeight)
+            frame.width = newWidth
+            frame.height = newHeight
             this.Execute(new EditShapeFrameCommand(frame, this.selectedShape))
         }
     }
@@ -56,7 +56,7 @@ class Editor extends Observable<EditorViewData> {
     public MoveShape(newTopLeft: Point): void {
         if (this.selectedShape !== null) {
             let frame = this.selectedShape.GetFrame()
-            frame.SetTopLeft(newTopLeft)
+            frame.topLeft = newTopLeft
             this.Execute(new EditShapeFrameCommand(frame, this.selectedShape))
         }
     }

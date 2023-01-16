@@ -1,54 +1,60 @@
 import styles from "./selected.module.css"
-import {useEffect, useRef} from "react";
+import {useRef} from "react";
 import {Shape} from "../../../model/shape/shape";
 import {useMoving} from "../../hooks/useMoving";
-import {Frame} from "../../../model/frame/frame";
 import {Point} from "../../../common/point/point";
 import {ControllerFunctions} from "../../controller/controllerFunctions";
-import {FrameWithId} from "../canvas";
+import {ShapeFrameProps} from "../wrapper/wrapper";
+import {useResize} from "../../hooks/useResize";
 
-interface SelectedProps {
+interface SelectedProps extends ShapeFrameProps {
     selectedShape: Shape
-    frame: FrameWithId | null
-    setFrame: (frame: FrameWithId | null) => void
     controllerFunc: ControllerFunctions
 }
 
 function Selected(props: SelectedProps) {
-    const ref = useRef(null)
+    const selectorRef = useRef(null)
     const setPosition = (position: Point) => {
-        if (props.frame === null) {
-            return
-        }
         props.setFrame({
-            id: props.selectedShape.GetID(),
-            frame: new Frame(
-                position,
-                props.frame.frame.GetWidth(),
-                props.frame.frame.GetHeight(),
-            )
+            ...props.frame,
+            topLeft: position
         })
     }
 
-    const topLeft = props.frame?.frame.GetTopLeft() ?? null
-    useMoving(ref, topLeft, setPosition, (point) => {
-        if (props.frame) {
-            props.controllerFunc.MoveShape(point)
-        }
+    useMoving(selectorRef, props.frame.topLeft, setPosition, (point: Point) => {
+        props.controllerFunc.MoveShape(point)
     })
 
-    if (props.frame === null) {
-        return null
+    const resizeRef = useRef(null)
+    const setSize = (width: number, height: number) => {
+        props.setFrame({
+            ...props.frame,
+            width: width,
+            height: height
+        })
     }
+
+    useResize(resizeRef, props.frame, setSize, (width, height) => {
+        props.controllerFunc.ResizeShape(width, height)
+    })
+
     return (
-        <rect
-            className={styles.selected}
-            ref={ref}
-            x={topLeft?.x}
-            y={topLeft?.y}
-            width={props.frame.frame.GetWidth()}
-            height={props.frame.frame.GetHeight()}
-        />
+        <>
+            <rect
+                className={styles.selected}
+                ref={selectorRef}
+                x={props.frame.topLeft.x}
+                y={props.frame.topLeft.y}
+                width={props.frame.width}
+                height={props.frame.height}
+            />
+            <circle
+                ref={resizeRef}
+                cx={props.frame.topLeft.x + props.frame.width}
+                cy={props.frame.topLeft.y + props.frame.height}
+                r={5}
+            />
+        </>
     )
 }
 

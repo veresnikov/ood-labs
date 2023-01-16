@@ -2,7 +2,6 @@ import {Editor} from "../model/editor/editor";
 import {FindShapeTypeByValue} from "../model/shape/shapeType";
 import {FindColorByValue} from "../common/color/color";
 import {Find} from "../common/enum/find";
-import {Frame} from "../model/frame/frame";
 import {Point} from "../common/point/point";
 
 class Controller {
@@ -44,6 +43,10 @@ class Controller {
 
     MoveShape(topLeft: Point): void {
         this.editor.MoveShape(topLeft)
+    }
+
+    ResizeShape(width: number, height: number): void {
+        this.editor.ResizeShape(width, height)
     }
 
     Undo(): void {

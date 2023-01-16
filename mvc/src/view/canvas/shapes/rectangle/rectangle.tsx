@@ -1,32 +1,62 @@
-import {useRef} from "react";
-import {Point} from "../../../../common/point/point";
-import {Color} from "../../../../common/color/color";
+import {useEffect, useRef} from "react";
+import {Rectangle as RectangleModel} from "../../../../model/shape/rectangle";
+import {ShapeFrameProps} from "../../wrapper/wrapper";
 
-interface RectangleProps {
+interface RectangleProps extends ShapeFrameProps {
     id: string
-    topLeft: Point
-    height: number
-    width: number
-    fillColor: Color
-    outlineColor: Color
-    outlineThickness: number
+    rectangle: RectangleModel
     selectFunc: () => void
+}
+
+const getRectangleData = (data: RectangleProps) => {
+    if (data.id !== data.frame.id) {
+        return {
+            x: data.rectangle.GetTopLeft().x,
+            y: data.rectangle.GetTopLeft().y,
+            width: data.rectangle.GetWight(),
+            height: data.rectangle.GetHeight(),
+        }
+    } else {
+        return {
+            x: data.frame.topLeft.x,
+            y: data.frame.topLeft.y,
+            width: data.frame.width,
+            height: data.frame.height,
+        }
+    }
 }
 
 function Rectangle(data: RectangleProps) {
     const ref = useRef(null)
+    const topLeft = data.rectangle.GetTopLeft()
+    const width = data.rectangle.GetWight()
+    const height = data.rectangle.GetHeight()
+
+    useEffect(() => {
+        if (data.id === data.frame.id) {
+            data.setFrame({
+                id: data.id,
+                ...data.rectangle.GetFrame()
+            })
+        }
+    }, [topLeft.x, topLeft.y, width, height])
+
+    const selectFunc = () => {
+        data.setFrame({id: data.id, ...data.rectangle.GetFrame()})
+        data.selectFunc()
+    }
+
+    const rectangleData = getRectangleData(data)
+
     return (
         <rect
             ref={ref}
             id={data.id}
-            x={data.topLeft.x}
-            y={data.topLeft.y}
-            width={data.width}
-            height={data.height}
-            fill={data.fillColor}
-            stroke={data.outlineColor}
-            strokeWidth={data.outlineThickness}
-            onClick={data.selectFunc}
+            {...rectangleData}
+            fill={data.rectangle.GetFillColor()}
+            stroke={data.rectangle.GetOutlineColor()}
+            strokeWidth={data.rectangle.GetOutlineThickness()}
+            onClick={selectFunc}
         />
     )
 }

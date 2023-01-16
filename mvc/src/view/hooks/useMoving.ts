@@ -8,7 +8,8 @@ export function useMoving(
     moveCallback: (point: Point) => void,
     persistCallback: (point: Point) => void
 ) {
-    const onStart = (position: Point) => {}
+    const onStart = (position: Point) => {
+    }
 
     const onMove = (delta: Point) => {
         if (!position) {

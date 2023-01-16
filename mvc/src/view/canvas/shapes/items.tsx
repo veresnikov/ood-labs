@@ -7,13 +7,11 @@ import {Ellipse} from "../../../model/shape/ellipse";
 import {Rectangle} from "../../../model/shape/rectangle";
 import {Triangle} from "../../../model/shape/triangle";
 import {ControllerFunctions} from "../../controller/controllerFunctions";
-import {FrameWithId} from "../canvas";
+import {ShapeFrameProps} from "../wrapper/wrapper";
 
-interface ItemsProps {
+interface ItemsProps extends ShapeFrameProps {
     items: Shape[]
     controller: ControllerFunctions
-    setFrame: (frame: FrameWithId | null) => void
-    frame: FrameWithId | null
 }
 
 function Items(props: ItemsProps) {
@@ -39,26 +37,20 @@ function Items(props: ItemsProps) {
                         return <RectangleView
                             key={rectangle.GetID()}
                             id={rectangle.GetID()}
-                            topLeft={rectangle.GetTopLeft()}
-                            height={rectangle.GetHeight()}
-                            width={rectangle.GetWight()}
-                            fillColor={rectangle.GetFillColor()}
-                            outlineColor={rectangle.GetOutlineColor()}
-                            outlineThickness={rectangle.GetOutlineThickness()}
+                            rectangle={rectangle}
                             selectFunc={selectFunc}
+                            frame={props.frame}
+                            setFrame={props.setFrame}
                         />
                     case ShapeType.Triangle:
                         const triangle = item as Triangle
                         return <TriangleView
                             key={triangle.GetID()}
                             id={triangle.GetID()}
-                            vertex1={triangle.GetVertex1()}
-                            vertex2={triangle.GetVertex2()}
-                            vertex3={triangle.GetVertex3()}
-                            fillColor={triangle.GetFillColor()}
-                            outlineColor={triangle.GetOutlineColor()}
-                            outlineThickness={triangle.GetOutlineThickness()}
+                            triangle={triangle}
                             selectFunc={selectFunc}
+                            frame={props.frame}
+                            setFrame={props.setFrame}
                         />
                     default:
                         return null

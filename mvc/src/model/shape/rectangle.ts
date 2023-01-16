@@ -9,7 +9,15 @@ class Rectangle extends Shape {
     private height: number
     private width: number
 
-    constructor(id: string, topLeft: Point, height: number, width: number, fillColor: Color | null = null, outlineColor: Color | null = null, outlineThickness: number | null = null) {
+    constructor(
+        id: string,
+        topLeft: Point,
+        height: number,
+        width: number,
+        fillColor: Color | null = null,
+        outlineColor: Color | null = null,
+        outlineThickness: number | null = null
+    ) {
         super(id, fillColor, outlineColor, outlineThickness);
         this.topLeft = topLeft
         this.height = height
@@ -29,17 +37,17 @@ class Rectangle extends Shape {
     }
 
     GetFrame(): Frame {
-        return new Frame(
-            this.topLeft,
-            this.width,
-            this.height,
-        )
+        return {
+            topLeft: this.topLeft,
+            width: this.width,
+            height: this.height
+        }
     }
 
     SetFrame(frame: Frame): void {
-        this.width = frame.GetWidth()
-        this.height = frame.GetHeight()
-        this.topLeft = frame.GetTopLeft()
+        this.topLeft = frame.topLeft
+        this.width = frame.width
+        this.height = frame.height
     }
 
     GetType(): ShapeType {

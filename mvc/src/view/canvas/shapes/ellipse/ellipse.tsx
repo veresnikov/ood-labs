@@ -1,43 +1,58 @@
 import {useEffect, useRef} from "react";
 import {Ellipse as EllipseModel} from "../../../../model/shape/ellipse";
-import {FrameWithId} from "../../canvas";
-import {Frame} from "../../../../model/frame/frame";
+import {ShapeFrameProps} from "../../wrapper/wrapper";
 
-interface EllipseProps {
+interface EllipseProps extends ShapeFrameProps {
     id: string
     ellipse: EllipseModel
     selectFunc: () => void
-    setFrame: (frame: FrameWithId | null) => void
-    frame: FrameWithId | null
+}
+
+const getEllipseData = (data: EllipseProps) => {
+    if (data.id !== data.frame.id) {
+        return {
+            cx: data.ellipse.GetCenter().x,
+            cy: data.ellipse.GetCenter().y,
+            rx: data.ellipse.GetWight(),
+            ry: data.ellipse.GetHeight(),
+        }
+    } else {
+        return {
+            cx: data.frame.topLeft.x + data.frame.width / 2,
+            cy: data.frame.topLeft.y + data.frame.height / 2,
+            rx: data.frame.width / 2,
+            ry: data.frame.height / 2,
+        }
+    }
 }
 
 function Ellipse(data: EllipseProps) {
     const ref = useRef(null)
+    const center = data.ellipse.GetCenter()
+    const width = data.ellipse.GetWight()
+    const height = data.ellipse.GetHeight()
 
     useEffect(() => {
-        data.setFrame({
-            id: data.id,
-            frame: data.ellipse.GetFrame()
-        })
-    }, [data.ellipse.GetCenter().x, data.ellipse.GetCenter().y])
+        if (data.id === data.frame.id) {
+            data.setFrame({
+                id: data.id,
+                ...data.ellipse.GetFrame()
+            })
+        }
+    }, [center.x, center.y, width, height])
+
     const selectFunc = () => {
-        data.setFrame({id: data.id, frame: data.ellipse.GetFrame()})
+        data.setFrame({id: data.id, ...data.ellipse.GetFrame()})
         data.selectFunc()
     }
 
-    const cx = data.id !== data.frame?.id ? data.ellipse.GetCenter().x : data.frame.frame.GetTopLeft().x + data.ellipse.GetWight()
-    const cy = data.id !== data.frame?.id ? data.ellipse.GetCenter().y : data.frame.frame.GetTopLeft().y + data.ellipse.GetHeight()
-    const rx = data.id !== data.frame?.id ? data.ellipse.GetWight() : data.frame.frame.GetWidth() / 2
-    const ry = data.id !== data.frame?.id ? data.ellipse.GetHeight() : data.frame.frame.GetHeight() / 2
+    const ellipseData = getEllipseData(data)
 
     return (
         <ellipse
             ref={ref}
             id={data.id}
-            cx={cx}
-            cy={cy}
-            rx={rx}
-            ry={ry}
+            {...ellipseData}
             fill={data.ellipse.GetFillColor()}
             stroke={data.ellipse.GetOutlineColor()}
             strokeWidth={data.ellipse.GetOutlineThickness()}

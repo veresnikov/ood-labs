@@ -10,7 +10,15 @@ class Triangle extends Shape {
     private vertex2: Point
     private vertex3: Point
 
-    constructor(id: string, vertex1: Point, vertex2: Point, vertex3: Point, fillColor: Color | null = null, outlineColor: Color | null = null, outlineThickness: number | null = null) {
+    constructor(
+        id: string,
+        vertex1: Point,
+        vertex2: Point,
+        vertex3: Point,
+        fillColor: Color | null = null,
+        outlineColor: Color | null = null,
+        outlineThickness: number | null = null
+    ) {
         super(id, fillColor, outlineColor, outlineThickness);
         this.vertex1 = vertex1
         this.vertex2 = vertex2
@@ -34,33 +42,33 @@ class Triangle extends Shape {
         let minY = Math.min(this.vertex1.y, this.vertex2.y, this.vertex3.y)
         let maxX = Math.max(this.vertex1.x, this.vertex2.x, this.vertex3.x)
         let maxY = Math.max(this.vertex1.y, this.vertex2.y, this.vertex3.y)
-        return new Frame(
-            {
+        return {
+            topLeft: {
                 x: minX,
-                y: minY,
+                y: minY
             },
-            maxX - minX,
-            maxY - minY,
-        )
+            width: maxX - minX,
+            height: maxY - minY,
+        }
     }
 
     SetFrame(frame: Frame): void {
-        let current = this.GetFrame()
-        let transformX = frame.GetWidth() / current.GetWidth()
-        let transformY = frame.GetHeight() / current.GetHeight()
-        this.TransformPoint(this.vertex1, current, frame, transformX, transformY)
-        this.TransformPoint(this.vertex2, current, frame, transformX, transformY)
-        this.TransformPoint(this.vertex3, current, frame, transformX, transformY)
+        const current = this.GetFrame()
+        let transformX = frame.width / current.width
+        let transformY = frame.height / current.height
+        this.vertex1 = Triangle.TransformPoint(this.vertex1, current, frame, transformX, transformY)
+        this.vertex2 = Triangle.TransformPoint(this.vertex2, current, frame, transformX, transformY)
+        this.vertex3 = Triangle.TransformPoint(this.vertex3, current, frame, transformX, transformY)
     }
 
     GetType(): ShapeType {
         return ShapeType.Triangle
     }
 
-    private TransformPoint(point: &Point, current: Frame, next: Frame, transformX: number, transformY: number): void {
-        point = {
-            x: next.GetTopLeft().x + (point.x - current.GetTopLeft().x) * transformX,
-            y: next.GetTopLeft().y + (point.y - current.GetTopLeft().y) * transformY,
+    static TransformPoint(point: Point, current: Frame, next: Frame, transformX: number, transformY: number): Point {
+        return  {
+            x: next.topLeft.x + (point.x - current.topLeft.x) * transformX,
+            y: next.topLeft.y + (point.y - current.topLeft.y) * transformY,
         }
     }
 }
