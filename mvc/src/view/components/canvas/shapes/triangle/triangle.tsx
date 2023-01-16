@@ -44,6 +44,7 @@ function Triangle(data: TriangleProps) {
                 ...data.triangle.GetFrame()
             })
         }
+        // eslint-disable-next-line
     }, [topLeft.x, topLeft.y, vertex1.x, vertex1.y, vertex2.x, vertex2.y, vertex3.x, vertex3.y])
 
     const selectFunc = () => {

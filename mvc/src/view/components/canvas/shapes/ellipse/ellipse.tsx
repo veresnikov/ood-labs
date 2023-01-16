@@ -39,6 +39,7 @@ function Ellipse(data: EllipseProps) {
                 ...data.ellipse.GetFrame()
             })
         }
+        // eslint-disable-next-line
     }, [center.x, center.y, width, height])
 
     const selectFunc = () => {

@@ -39,6 +39,7 @@ function Rectangle(data: RectangleProps) {
                 ...data.rectangle.GetFrame()
             })
         }
+        // eslint-disable-next-line
     }, [topLeft.x, topLeft.y, width, height])
 
     const selectFunc = () => {
