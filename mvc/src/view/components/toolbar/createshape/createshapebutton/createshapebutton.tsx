@@ -1,4 +1,3 @@
-import styles from "./createshapebutton.module.css"
 import {ControllerFunctions} from "../../../../controller/controllerFunctions";
 
 interface ColorButtonProps {
@@ -12,7 +11,6 @@ function Createshapebutton(props: ColorButtonProps) {
     }
     return (
         <button
-            className={styles.createshapebutton}
             onClick={createShapeFunc}>
             {props.shape}
         </button>

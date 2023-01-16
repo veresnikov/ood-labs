@@ -52,6 +52,10 @@ class Controller {
         this.editor.ResizeShape(width, height)
     }
 
+    DeleteShape(): void {
+        this.editor.DeleteShape()
+    }
+
     Undo(): void {
         this.editor.Undo()
     }

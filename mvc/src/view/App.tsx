@@ -23,7 +23,7 @@ function App(root: ReactDOM.Root, editor: Editor, controller: Controller) {
     const renderFunc = (data: EditorViewData) => {
         root.render(
             <React.StrictMode>
-                <EditorView data={data} controllerFunctions={BuildControllerFunctions(controller)} />
+                <EditorView data={data} controllerFunctions={BuildControllerFunctions(controller)}/>
             </React.StrictMode>
         )
     }

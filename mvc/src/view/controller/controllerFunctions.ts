@@ -2,7 +2,7 @@ import {Controller} from "../../controller/controller";
 import {Point} from "../../common/point/point";
 
 interface ControllerFunctions {
-    SelectShape(id: string| null): void
+    SelectShape(id: string | null): void
 
     CreateShape(type: string): void
 
@@ -13,6 +13,8 @@ interface ControllerFunctions {
     MoveShape(topLeft: Point): void
 
     ResizeShape(width: number, height: number): void
+
+    DeleteShape(): void
 
     Undo(): void
 
@@ -42,6 +44,9 @@ function BuildControllerFunctions(controller: Controller): ControllerFunctions {
         },
         ResizeShape(width: number, height: number) {
             controller.ResizeShape(width, height)
+        },
+        DeleteShape() {
+            controller.DeleteShape()
         },
         Undo() {
             controller.Undo()
