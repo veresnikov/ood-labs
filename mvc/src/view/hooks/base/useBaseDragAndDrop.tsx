@@ -8,10 +8,13 @@ export function UseBaseDragAndDrop(
     onMouseUpCallback?: PositionHandler,
     onMouseDownCallback?: PositionHandler,
 ) {
+    const isActive = useRef<boolean>(false)
     const pagePosition = useRef<Point>({x: 0, y: 0})
     const currentPosition = useRef<Point>({x: 0, y: 0})
 
     const handleMouseMove = useCallback((e: MouseEvent) => {
+        isActive.current = true
+
         currentPosition.current = {
             x: e.pageX - pagePosition.current.x,
             y: e.pageY - pagePosition.current.y,
@@ -20,7 +23,7 @@ export function UseBaseDragAndDrop(
     }, [onMouseMoveCallback])
 
     const handleMouseUp = useCallback((_: MouseEvent) => {
-        onMouseUpCallback?.(currentPosition.current)
+        isActive.current && onMouseUpCallback?.(currentPosition.current)
 
         document.removeEventListener('mousemove', handleMouseMove)
         document.removeEventListener('mouseup', handleMouseUp)
@@ -28,6 +31,8 @@ export function UseBaseDragAndDrop(
     }, [handleMouseMove, onMouseUpCallback])
 
     const handleMouseDown = useCallback((e: Event) => {
+        isActive.current = false
+
         pagePosition.current = {
             x: (e as MouseEvent).pageX,
             y: (e as MouseEvent).pageY
