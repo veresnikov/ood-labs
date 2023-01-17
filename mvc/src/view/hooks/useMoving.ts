@@ -17,7 +17,7 @@ export function useMoving(
         let clientRect = ref.current?.getBoundingClientRect()
         if (clientRect) {
             delta.x = Normalize(position.x + delta.x, 0, DefaultValues.canvasWidth - clientRect.width)
-            delta.y =  Normalize(position.y + delta.y, 0, DefaultValues.canvasHeight - clientRect.height)
+            delta.y = Normalize(position.y + delta.y, 0, DefaultValues.canvasHeight - clientRect.height)
         }
         moveCallback(delta)
     }

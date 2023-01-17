@@ -2,6 +2,8 @@ import {RefObject} from "react";
 import {Frame} from "../../model/frame/frame";
 import {Point} from "../../common/point/point";
 import {UseBaseDragAndDrop} from "./base/useBaseDragAndDrop";
+import {Normalize} from "../../common/utils/normalize";
+import {DefaultValues} from "../../defaultValues";
 
 function useResize(
     ref: RefObject<Element>,
@@ -9,12 +11,12 @@ function useResize(
     resizeCallback: (width: number, height: number) => void,
     persistCallback: (width: number, height: number) => void
 ) {
-    const onStart = (position: Point) => {
+    const onStart = (_: Point) => {
     }
 
     const onMove = (delta: Point) => {
-        delta.x = delta.x + frame.width
-        delta.y = delta.y + frame.height
+        delta.x = Normalize(frame.width + delta.x, 1, DefaultValues.canvasWidth - frame.topLeft.x)
+        delta.y = Normalize(frame.height + delta.y, 1, DefaultValues.canvasHeight - frame.topLeft.y)
         resizeCallback(delta.x, delta.y)
     }
 
