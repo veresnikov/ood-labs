@@ -1,0 +1,4 @@
+ellipse red {100,300} 30 60
+rectangle green {100,150} 40 100
+regular_polygon yellow {500,500} 16 30
+triangle black {300,100} {400,250} {230,200}

@@ -31,7 +31,7 @@ class Rectangle extends Shape
         $canvas->DrawLine($this->topLeft, $topRight);
         $canvas->DrawLine($topRight, $bottomRight);
         $canvas->DrawLine($bottomRight, $bottomLeft);
-        $canvas->DrawLine($this->topLeft, $this->topLeft);
+        $canvas->DrawLine($bottomLeft, $this->topLeft);
     }
 
     public function getTopLeft(): Point
