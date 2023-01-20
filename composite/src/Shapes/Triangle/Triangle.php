@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Shapes\Triangle;
+namespace App\Shapes\Triangle;
 
-use Application\Canvas\CanvasInterface;
-use Application\Canvas\Point;
-use Application\Shapes\Base\Shape;
-use Application\Shapes\Frame;
+use App\Canvas\CanvasInterface;
+use App\Canvas\Point;
+use App\Shapes\Base\Shape;
+use App\Shapes\Frame;
 
 class Triangle extends Shape
 {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Styles;
+namespace App\Styles;
 interface OutlineStyleInterface extends StyleInterface
 {
     public function GetThickness(): ?float;

@@ -1,34 +1,37 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Styles;
+namespace App\Styles;
 
-use Application\Canvas\RGBAColor;
+use App\Canvas\RGBAColor;
 
 class Style implements StyleInterface
 {
+    private bool $enabled = false;
+    private ?RGBAColor $color = null;
+
     public function IsEnable(): ?bool
     {
-        // TODO: Implement IsEnable() method.
+        return $this->enabled;
     }
 
     public function Enable(): void
     {
-        // TODO: Implement Enable() method.
+        $this->enabled = true;
     }
 
     public function Disable(): void
     {
-        // TODO: Implement Disable() method.
+        $this->enabled = false;
     }
 
     public function GetColor(): ?RGBAColor
     {
-        // TODO: Implement GetColor() method.
+        return $this->color;
     }
 
     public function SetColor(RGBAColor $color): void
     {
-        // TODO: Implement SetColor() method.
+        $this->color = $color;
     }
 }

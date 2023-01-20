@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Shapes;
+namespace App\Shapes;
 
-use Application\Canvas\CanvasInterface;
+use App\Canvas\CanvasInterface;
 
 interface DrawableShapeInterface
 {

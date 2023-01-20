@@ -1,19 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\ShapeGroup;
+namespace App\ShapeGroup;
 
-use Application\Canvas\RGBAColor;
-use Application\Shapes\ShapeInterface;
-use Application\Styles\StyleInterface;
+use App\Canvas\RGBAColor;
+use App\Styles\StyleInterface;
+use Closure;
 
 class GroupStyle implements StyleInterface
 {
     /**
-     * @param StyleInterface[] $styles
+     * @param Closure $callback
      */
     public function __construct(
-        private array &$styles
+        private Closure $callback
     )
     {
     }
@@ -21,7 +21,7 @@ class GroupStyle implements StyleInterface
     public function IsEnable(): ?bool
     {
         $enable = null;
-        foreach ($this->styles as $style) {
+        foreach ($this->GetStyles() as $style) {
             $e = $style->IsEnable();
             if (!$e) {
                 return null;
@@ -39,14 +39,14 @@ class GroupStyle implements StyleInterface
 
     public function Enable(): void
     {
-        foreach ($this->styles as $style) {
+        foreach ($this->GetStyles() as $style) {
             $style->Enable();
         }
     }
 
     public function Disable(): void
     {
-        foreach ($this->styles as $style) {
+        foreach ($this->GetStyles() as $style) {
             $style->Disable();
         }
     }
@@ -54,7 +54,7 @@ class GroupStyle implements StyleInterface
     public function GetColor(): ?RGBAColor
     {
         $color = null;
-        foreach ($this->styles as $style) {
+        foreach ($this->GetStyles() as $style) {
             $e = $style->GetColor();
             if (!$e) {
                 return null;
@@ -72,8 +72,16 @@ class GroupStyle implements StyleInterface
 
     public function SetColor(RGBAColor $color): void
     {
-        foreach ($this->styles as $style) {
+        foreach ($this->GetStyles() as $style) {
             $style->SetColor($color);
         }
+    }
+
+    /**
+     * @return StyleInterface[]
+     */
+    private function GetStyles(): array
+    {
+        return call_user_func($this->callback);
     }
 }

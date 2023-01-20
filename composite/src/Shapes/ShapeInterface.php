@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Shapes;
+namespace App\Shapes;
 
-use Application\ShapeGroup\ShapeGroupInterface;
-use Application\Styles\OutlineStyleInterface;
-use Application\Styles\StyleInterface;
+use App\ShapeGroup\ShapeGroupInterface;
+use App\Styles\OutlineStyleInterface;
+use App\Styles\StyleInterface;
 
 interface ShapeInterface extends DrawableShapeInterface
 {

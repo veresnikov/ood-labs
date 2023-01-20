@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\ShapeGroup;
+namespace App\ShapeGroup;
 
-use Application\Shapes\ShapeInterface;
+use App\Shapes\ShapeInterface;
 
 interface ShapeGroupInterface extends ShapeInterface
 {

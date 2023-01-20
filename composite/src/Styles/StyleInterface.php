@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Styles;
+namespace App\Styles;
 
-use Application\Canvas\RGBAColor;
+use App\Canvas\RGBAColor;
 
 interface StyleInterface
 {

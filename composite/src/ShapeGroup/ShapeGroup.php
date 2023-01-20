@@ -1,26 +1,47 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\ShapeGroup;
+namespace App\ShapeGroup;
 
+use App\Canvas\CanvasInterface;
+use App\Canvas\Point;
+use App\Shapes\Frame;
+use App\Shapes\ShapeInterface;
+use App\Styles\OutlineStyleInterface;
+use App\Styles\StyleInterface;
 use App\Utils\Utils;
-use Application\Canvas\CanvasInterface;
-use Application\Canvas\Point;
-use Application\Shapes\Frame;
-use Application\Shapes\ShapeInterface;
-use Application\Styles\OutlineStyleInterface;
-use Application\Styles\StyleInterface;
 
 class ShapeGroup implements ShapeGroupInterface
 {
+    private OutlineStyleInterface $outlineStyle;
+
+    private StyleInterface $fillStyle;
+
     /**
-     * @var ShapeInterface[]
+     * @param ShapeInterface[] $shapes
      */
-    private array $shapes = [];
-
-    private GroupOutlineStyle $outlineStyle;
-
-    private GroupStyle $fillStyle;
+    public function __construct(
+        private array $shapes = [],
+    )
+    {
+        $shapes = &$this->shapes;
+        $outlineStyleCallback = function () use ($shapes) {
+            $styles = [];
+            foreach ($shapes as $shape) {
+                $styles[] = $shape->GetOutlineStyle();
+            }
+            return $styles;
+        };
+        $fillStyleCallback = function () use ($shapes) {
+            $styles = [];
+            foreach ($shapes as $shape) {
+                $styles[] = $shape->GetFillStyle();
+            }
+            return $styles;
+        };
+        $this->outlineStyle = new GroupOutlineStyle($outlineStyleCallback);
+        $this->fillStyle = new GroupStyle($fillStyleCallback);
+    }
 
     public function Draw(CanvasInterface $canvas): void
     {
@@ -100,8 +121,8 @@ class ShapeGroup implements ShapeGroupInterface
             $newTopLeft->x = $frame->topLeft->x + ($shapeFrame->getTopLeft()->x - $current->topLeft->x) * $transformX;
             $newTopLeft->y = $frame->topLeft->y + ($shapeFrame->getTopLeft()->y - $current->topLeft->y) * $transformY;
             $newFrame = new Frame();
-            $newTopLeft->wight = $shapeFrame->width * $transformX;
-            $newTopLeft->height = $shapeFrame->height * $transformY;
+            $newFrame->width = $shapeFrame->width * $transformX;
+            $newFrame->height = $shapeFrame->height * $transformY;
             $newFrame->topLeft = $newTopLeft;
             $shape->SetFrame($newFrame);
         }

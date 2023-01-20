@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Canvas;
+namespace App\Canvas;
 interface CanvasInterface
 {
     public function DrawLine(Point $start, Point $end, ?RGBAColor $color, ?float $thickness): void;

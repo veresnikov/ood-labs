@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Canvas;
+namespace App\Canvas;
 class Point
 {
     public float $x;

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Shapes;
+namespace App\Shapes;
 
-use Application\Canvas\Point;
+use App\Canvas\Point;
 
 class Frame
 {
@@ -20,21 +20,21 @@ class Frame
 
     public function getTopRight(): Point
     {
-        $point = $this->topLeft;
+        $point = clone $this->topLeft;
         $point->x = $point->x + $this->width;
         return $point;
     }
 
     public function getBottomLeft(): Point
     {
-        $point = $this->topLeft;
+        $point = clone $this->topLeft;
         $point->y = $point->y + $this->height;
         return $point;
     }
 
     public function getBottomRight(): Point
     {
-        $point = $this->topLeft;
+        $point = clone $this->topLeft;
         $point->x = $point->x + $this->width;
         $point->y = $point->y + $this->height;
         return $point;

@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Shapes\Base;
+namespace App\Shapes\Base;
 
-use Application\Canvas\RGBAColor;
-use Application\ShapeGroup\ShapeGroupInterface;
-use Application\Shapes\ShapeInterface;
-use Application\Styles\OutlineStyle;
-use Application\Styles\OutlineStyleInterface;
-use Application\Styles\Style;
-use Application\Styles\StyleInterface;
+use App\Canvas\RGBAColor;
+use App\ShapeGroup\ShapeGroupInterface;
+use App\Shapes\ShapeInterface;
+use App\Styles\OutlineStyle;
+use App\Styles\OutlineStyleInterface;
+use App\Styles\Style;
+use App\Styles\StyleInterface;
 
 abstract class Shape implements ShapeInterface
 {
@@ -23,12 +23,12 @@ abstract class Shape implements ShapeInterface
         $this->fillStyle = new Style();
     }
 
-    final public function GetOutlineStyle(): OutlineStyleInterface
+    final public function &GetOutlineStyle(): OutlineStyleInterface
     {
         return $this->outlineStyle;
     }
 
-    final public function GetFillStyle(): StyleInterface
+    final public function &GetFillStyle(): StyleInterface
     {
         return $this->fillStyle;
     }
