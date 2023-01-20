@@ -47,7 +47,7 @@ class SVGCanvas implements CanvasInterface
     {
         $svgPoints = $this->GetPoints($points);
         $color = $this->GetFillColor($fillColor);
-        $strokeColor = $this->GetStrokeColor($fillColor);
+        $strokeColor = $this->GetStrokeColor($outlineColor);
         $strokeWidth = $this->GetStrokeWidth($thickness);
         $this->items[] = "<polygon $svgPoints $color $strokeColor $strokeWidth/>";
     }
@@ -57,7 +57,7 @@ class SVGCanvas implements CanvasInterface
         $x = $center->x;
         $y = $center->y;
         $color = $this->GetFillColor($fillColor);
-        $strokeColor = $this->GetStrokeColor($fillColor);
+        $strokeColor = $this->GetStrokeColor($outlineColor);
         $strokeWidth = $this->GetStrokeWidth($thickness);
         $this->items[] = "<ellipse cx=\"$x\" cy=\"$y\" rx=\"$width\" ry=\"$height\" $color $strokeColor $strokeWidth/>";
     }
@@ -65,7 +65,7 @@ class SVGCanvas implements CanvasInterface
     private function GetFillColor(?RGBAColor $color): string
     {
         if (!$color) {
-            return "";
+            return "fill-opacity=\"0\"";
         }
         $color = sprintf("#%02x%02x%02x", $color->r, $color->g, $color->b);
         return "fill=\"{$color}\"";
