@@ -15,11 +15,7 @@ interface ShapeInterface extends DrawableShapeInterface
 
     public function GetOutlineStyle(): OutlineStyleInterface;
 
-    public function SetOutlineStyle(OutlineStyleInterface $outlineStyle): void;
-
     public function GetFillStyle(): StyleInterface;
-
-    public function SetFillStyle(StyleInterface $fillStyle): void;
 
     public function GetGroup(): ?ShapeGroupInterface;
 }

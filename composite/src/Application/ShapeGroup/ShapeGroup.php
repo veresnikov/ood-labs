@@ -18,6 +18,10 @@ class ShapeGroup implements ShapeGroupInterface
      */
     private array $shapes = [];
 
+    private GroupOutlineStyle $outlineStyle;
+
+    private GroupStyle $fillStyle;
+
     public function Draw(CanvasInterface $canvas): void
     {
         foreach ($this->shapes as $shape) {
@@ -105,22 +109,12 @@ class ShapeGroup implements ShapeGroupInterface
 
     public function GetOutlineStyle(): OutlineStyleInterface
     {
-        // TODO: Implement GetOutlineStyle() method.
-    }
-
-    public function SetOutlineStyle(OutlineStyleInterface $outlineStyle): void
-    {
-        // TODO: Implement SetOutlineStyle() method.
+        return $this->outlineStyle;
     }
 
     public function GetFillStyle(): StyleInterface
     {
-        // TODO: Implement GetFillStyle() method.
-    }
-
-    public function SetFillStyle(StyleInterface $fillStyle): void
-    {
-        // TODO: Implement SetFillStyle() method.
+        return $this->fillStyle;
     }
 
     public function GetGroup(): ?ShapeGroupInterface

@@ -28,19 +28,9 @@ abstract class Shape implements ShapeInterface
         return $this->outlineStyle;
     }
 
-    final public function SetOutlineStyle(OutlineStyleInterface $outlineStyle): void
-    {
-        $this->outlineStyle = $outlineStyle;
-    }
-
     final public function GetFillStyle(): StyleInterface
     {
         return $this->fillStyle;
-    }
-
-    final public function SetFillStyle(StyleInterface $fillStyle): void
-    {
-        $this->fillStyle = $fillStyle;
     }
 
     public function GetGroup(): ?ShapeGroupInterface
