@@ -8,39 +8,97 @@ use Application\Styles\OutlineStyleInterface;
 
 class GroupOutlineStyle implements OutlineStyleInterface
 {
+    /**
+     * @param OutlineStyleInterface[] $styles
+     */
+    public function __construct(
+        private array &$styles
+    )
+    {
+    }
 
     public function GetThickness(): ?float
     {
-        // TODO: Implement GetThickness() method.
+        $thickness = null;
+        foreach ($this->styles as $style) {
+            $current = $style->GetThickness();
+            if (!$current) {
+                return null;
+            }
+            if (!$thickness) {
+                $thickness = $current;
+                continue;
+            }
+            if ($thickness !== $current) {
+                return null;
+            }
+        }
+        return $thickness;
     }
 
     public function SetThickness(float $thickness): void
     {
-        // TODO: Implement SetThickness() method.
+        foreach ($this->styles as $style) {
+            $style->SetThickness($thickness);
+        }
     }
 
     public function IsEnable(): ?bool
     {
-        // TODO: Implement IsEnable() method.
+        $enable = null;
+        foreach ($this->styles as $style) {
+            $e = $style->IsEnable();
+            if (!$e) {
+                return null;
+            }
+            if (!$enable) {
+                $enable = $e;
+                continue;
+            }
+            if ($enable !== $e) {
+                return null;
+            }
+        }
+        return $enable;
     }
 
     public function Enable(): void
     {
-        // TODO: Implement Enable() method.
+        foreach ($this->styles as $style) {
+            $style->Enable();
+        }
     }
 
     public function Disable(): void
     {
-        // TODO: Implement Disable() method.
+        foreach ($this->styles as $style) {
+            $style->Disable();
+        }
     }
 
     public function GetColor(): ?RGBAColor
     {
-        // TODO: Implement GetColor() method.
+        $color = null;
+        foreach ($this->styles as $style) {
+            $e = $style->GetColor();
+            if (!$e) {
+                return null;
+            }
+            if (!$color) {
+                $color = $e;
+                continue;
+            }
+            if ($color !== $e) {
+                return null;
+            }
+        }
+        return $color;
     }
 
     public function SetColor(RGBAColor $color): void
     {
-        // TODO: Implement SetColor() method.
+        foreach ($this->styles as $style) {
+            $style->SetColor($color);
+        }
     }
 }

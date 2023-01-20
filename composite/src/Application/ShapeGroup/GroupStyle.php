@@ -21,18 +21,16 @@ class GroupStyle implements StyleInterface
     public function IsEnable(): ?bool
     {
         $enable = null;
-        foreach ($this->styles as $shape) {
-            $e = $shape->IsEnable();
+        foreach ($this->styles as $style) {
+            $e = $style->IsEnable();
             if (!$e) {
                 return null;
             }
-            if ($enable)
-            {
+            if (!$enable) {
                 $enable = $e;
                 continue;
             }
-            if ($enable !== $e)
-            {
+            if ($enable !== $e) {
                 return null;
             }
         }
@@ -41,21 +39,41 @@ class GroupStyle implements StyleInterface
 
     public function Enable(): void
     {
-        // TODO: Implement Enable() method.
+        foreach ($this->styles as $style) {
+            $style->Enable();
+        }
     }
 
     public function Disable(): void
     {
-        // TODO: Implement Disable() method.
+        foreach ($this->styles as $style) {
+            $style->Disable();
+        }
     }
 
     public function GetColor(): ?RGBAColor
     {
-        // TODO: Implement GetColor() method.
+        $color = null;
+        foreach ($this->styles as $style) {
+            $e = $style->GetColor();
+            if (!$e) {
+                return null;
+            }
+            if (!$color) {
+                $color = $e;
+                continue;
+            }
+            if ($color !== $e) {
+                return null;
+            }
+        }
+        return $color;
     }
 
     public function SetColor(RGBAColor $color): void
     {
-        // TODO: Implement SetColor() method.
+        foreach ($this->styles as $style) {
+            $style->SetColor($color);
+        }
     }
 }

@@ -45,8 +45,8 @@ class Ellipse extends Shape
 
     public function SetFrame(Frame $frame): void
     {
-        $this->center->x = $frame->topLeft->x + ($frame->width / 2);
-        $this->center->y = $frame->topLeft->y + ($frame->height / 2);
+        $this->center->x = $frame->topLeft->x + $frame->width;
+        $this->center->y = $frame->topLeft->y + $frame->height;
         $this->width = $frame->width / 2;
         $this->height = $frame->height / 2;
     }
