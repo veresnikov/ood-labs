@@ -1,6 +1,7 @@
 import {useEffect, useRef} from "react";
 import {Triangle as TriangleModel} from "../../../../../model/shape/triangle";
 import {ShapeFrameProps} from "../../wrapper/wrapper";
+import {TransformPoint} from "../../../../../common/transform/transform";
 
 interface TriangleProps extends ShapeFrameProps {
     id: string
@@ -19,9 +20,9 @@ const getTriangleData = (data: TriangleProps) => {
         const current = data.triangle.GetFrame()
         let transformX = data.frame.width / current.width
         let transformY = data.frame.height / current.height
-        const vertex1 = TriangleModel.TransformPoint(data.triangle.GetVertex1(), current, data.frame, transformX, transformY)
-        const vertex2 = TriangleModel.TransformPoint(data.triangle.GetVertex2(), current, data.frame, transformX, transformY)
-        const vertex3 = TriangleModel.TransformPoint(data.triangle.GetVertex3(), current, data.frame, transformX, transformY)
+        const vertex1 = TransformPoint(data.triangle.GetVertex1(), current, data.frame, transformX, transformY)
+        const vertex2 = TransformPoint(data.triangle.GetVertex2(), current, data.frame, transformX, transformY)
+        const vertex3 = TransformPoint(data.triangle.GetVertex3(), current, data.frame, transformX, transformY)
         return {
             points: `${vertex1.x} ${vertex1.y},
             ${vertex2.x} ${vertex2.y},

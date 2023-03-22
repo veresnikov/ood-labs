@@ -3,6 +3,7 @@ import {Frame} from "../frame/frame";
 import {Point} from "../../common/point/point";
 import {Color} from "../../common/color/color";
 import {ShapeType} from "./shapeType";
+import {TransformPoint} from "../../common/transform/transform";
 
 
 class Triangle extends Shape {
@@ -56,20 +57,13 @@ class Triangle extends Shape {
         const current = this.GetFrame()
         let transformX = frame.width / current.width
         let transformY = frame.height / current.height
-        this.vertex1 = Triangle.TransformPoint(this.vertex1, current, frame, transformX, transformY)
-        this.vertex2 = Triangle.TransformPoint(this.vertex2, current, frame, transformX, transformY)
-        this.vertex3 = Triangle.TransformPoint(this.vertex3, current, frame, transformX, transformY)
+        this.vertex1 = TransformPoint(this.vertex1, current, frame, transformX, transformY)
+        this.vertex2 = TransformPoint(this.vertex2, current, frame, transformX, transformY)
+        this.vertex3 = TransformPoint(this.vertex3, current, frame, transformX, transformY)
     }
 
     GetType(): ShapeType {
         return ShapeType.Triangle
-    }
-
-    static TransformPoint(point: Point, current: Frame, next: Frame, transformX: number, transformY: number): Point {
-        return  {
-            x: next.topLeft.x + (point.x - current.topLeft.x) * transformX,
-            y: next.topLeft.y + (point.y - current.topLeft.y) * transformY,
-        }
     }
 }
 

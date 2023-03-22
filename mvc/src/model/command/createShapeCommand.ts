@@ -10,16 +10,23 @@ class CreateShapeCommand extends AbstractCommand {
     private newShape: Shape | null = null
     private unselectCallback: (shape: Shape) => void
 
-    constructor(type: ShapeType, shapes: &Shape[], unselectCallback: (shape: Shape) => void) {
+    private selectCallback: (shape: Shape) => void
+
+    constructor(type: ShapeType, shapes: &Shape[], unselectCallback: (shape: Shape) => void, selectCallback: (shape: Shape) => void) {
         super()
         this.type = type
         this.shapes = shapes
         this.unselectCallback = unselectCallback
+        this.selectCallback = selectCallback
     }
 
     protected doExecute(): void {
         if (this.newShape === null) {
             this.newShape = ShapeFactory.CreateShape(this.type)
+
+            if (this.type === ShapeType.Polyline) {
+                this.selectCallback(this.newShape)
+            }
         }
         this.shapes.push(this.newShape)
     }

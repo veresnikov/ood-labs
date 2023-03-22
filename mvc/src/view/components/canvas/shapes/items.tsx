@@ -3,13 +3,15 @@ import {ShapeType} from "../../../../model/shape/shapeType";
 import {Ellipse as EllipseView} from "./ellipse/ellipse";
 import {Rectangle as RectangleView} from "./rectangle/rectangle";
 import {Triangle as TriangleView} from "./triangle/triangle";
+import {Polyline as PolylineView} from "./polyline/polyline";
 import {Ellipse} from "../../../../model/shape/ellipse";
 import {Rectangle} from "../../../../model/shape/rectangle";
 import {Triangle} from "../../../../model/shape/triangle";
 import {ControllerFunctions} from "../../../controller/controllerFunctions";
-import {ShapeFrameProps} from "../wrapper/wrapper";
+import {ShapeDrawableProps, ShapeFrameProps} from "../wrapper/wrapper";
+import {Polyline} from "../../../../model/shape/polyline";
 
-interface ItemsProps extends ShapeFrameProps {
+interface ItemsProps extends ShapeFrameProps, ShapeDrawableProps {
     items: Shape[]
     controller: ControllerFunctions
 }
@@ -51,6 +53,17 @@ function Items(props: ItemsProps) {
                             selectFunc={selectFunc}
                             frame={props.frame}
                             setFrame={props.setFrame}
+                        />
+                    case ShapeType.Polyline:
+                        const polyline = item as Polyline
+                        return <PolylineView
+                            key={polyline.GetID()}
+                            id={polyline.GetID()}
+                            polyline={polyline}
+                            selectFunc={selectFunc}
+                            frame={props.frame}
+                            setFrame={props.setFrame}
+                            points={props.points}
                         />
                     default:
                         return null

@@ -74,7 +74,7 @@ class Editor extends Observable<EditorViewData> {
             if (shape === this.selectedShape) {
                 this.SelectShape(null)
             }
-        }))
+        }, (shape: Shape) => this.SelectShape(shape)))
     }
 
     public GetShapes(): Shape[] {

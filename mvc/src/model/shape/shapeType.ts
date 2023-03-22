@@ -4,6 +4,7 @@ enum ShapeType {
     Ellipse = "Ellipse",
     Rectangle = "Rectangle",
     Triangle = "Triangle",
+    Polyline = "Polyline",
 }
 
 function FindShapeTypeByValue(type: string): ShapeType | null {

@@ -5,6 +5,7 @@ import {Rectangle} from "./rectangle";
 import {Triangle} from "./triangle";
 import {ShapeType} from "./shapeType";
 import {Uuid} from "../../common/uuid/uuid";
+import {Polyline} from "./polyline";
 
 class ShapeFactory {
     static CreateShape(type: ShapeType): Shape {
@@ -53,6 +54,9 @@ class ShapeFactory {
                         y: point.y + DefaultValues.defaultFrameHeight / 2,
                     },
                 )
+            // eslint-disable-next-line
+            case ShapeType.Polyline:
+                return new Polyline(id, null, null)
             default:
                 throw new Error("unexpected shape type")
         }
