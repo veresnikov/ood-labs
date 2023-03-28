@@ -2,7 +2,6 @@ import {useEffect, useRef, useState} from "react";
 import {ShapeFrameProps, ShapeDrawableProps} from "../../wrapper/wrapper";
 import {Polyline as PolylineModel} from "../../../../../model/shape/polyline";
 import {TransformPoint} from "../../../../../common/transform/transform";
-import {Point} from "../../../../../common/point/point";
 
 interface PolylineProps extends ShapeFrameProps, ShapeDrawableProps {
     id: string
@@ -54,6 +53,7 @@ function Polyline(data: PolylineProps) {
             })
             setPolylineData({...getPolylineData(data)})
         }
+        // eslint-disable-next-line
     }, [points, data.points])
 
     const selectFunc = () => {

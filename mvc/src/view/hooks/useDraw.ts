@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Point} from "../../common/point/point";
 import {UseBaseDragAndDrop} from "./base/useBaseDragAndDrop";
 import {Normalize} from "../../common/utils/normalize";
