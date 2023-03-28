@@ -6,9 +6,7 @@ import {ShapeType} from "./shapeType";
 import {TransformPoint} from "../../common/transform/transform";
 
 class Polyline extends Shape {
-    private points: Point[] = [
-        // {x: 100, y: 200}, {x: 110, y: 210}, {x: 90, y: 230}, {x: 130, y: 230}, {x: 130, y: 250},
-    ]
+    private points: Point[] = []
 
     constructor(
         id: string,
